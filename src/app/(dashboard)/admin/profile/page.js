@@ -489,11 +489,11 @@ const StudentProfile = React.memo(() => {
 
                 <Form.Item
                   name="previousProjects"
-                  label="Previous Projects"
+                  label="Previous Project"
                 >
                   <TextArea 
                     rows={4} 
-                    placeholder="Describe any previous projects or relevant experience..." 
+                    placeholder="Describe any previous project or relevant experience..." 
                   />
                 </Form.Item>
 
@@ -622,8 +622,8 @@ const StudentProfile = React.memo(() => {
                 </div>
 
                 <div>
-                  <label className="text-sm font-medium text-gray-500">Previous Projects</label>
-                  <p className="text-base text-gray-900 mt-1 whitespace-pre-wrap">{currentUser?.previous_projects || currentUser?.previousProjects || 'Not provided'}</p>
+                  <label className="text-sm font-medium text-gray-500">Previous Project</label>
+                  <p className="text-base text-gray-900 mt-1 whitespace-pre-wrap">{currentUser?.previous_project || currentUser?.previousProject || 'Not provided'}</p>
                 </div>
               </div>
             )}
