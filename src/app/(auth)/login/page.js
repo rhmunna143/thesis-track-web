@@ -6,34 +6,34 @@ import Link from 'next/link'
 import { Form, Input, Button, Alert, Checkbox, Divider } from 'antd'
 import { EyeInvisibleOutlined, EyeTwoTone, LockOutlined, MailOutlined } from '@ant-design/icons'
 import useAuthStore from '../../../store/authStore'
-import { authService } from '../../../services/auth.service'
+import useErrorHandler from '../../../hooks/useErrorHandler'
 
 export default function LoginPage() {
-  const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const router = useRouter()
-  const login = useAuthStore((state) => state.login)
+  const { login, loading } = useAuthStore()
+  const { handleError } = useErrorHandler()
 
   const onFinish = async (values) => {
-    setLoading(true)
     setError('')
     
     try {
-      const response = await authService.login({
+      const result = await login({
         email: values.email,
         password: values.password,
       })
       
-      login(response.user, response.token)
-      
-      // Redirect based on user role
-      const role = response.user.role.toLowerCase()
-      router.push(`/${role}`)
+      if (result.success) {
+        // Redirect based on user role
+        const role = result.user.role.toLowerCase()
+        router.push(`/${role}`)
+      } else {
+        setError(result.error)
+      }
       
     } catch (err) {
-      setError(err.message || 'Login failed. Please try again.')
-    } finally {
-      setLoading(false)
+      const errorInfo = handleError(err, { silent: true })
+      setError(errorInfo.message)
     }
   }
 

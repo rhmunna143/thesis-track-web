@@ -1,5 +1,6 @@
 import './globals.css'
 import { AntdRegistry } from '@ant-design/nextjs-registry'
+import ErrorBoundary from '../components/common/ErrorBoundary'
 
 export const metadata = {
   title: 'ThesisTrack - Project Proposal & Review System',
@@ -10,9 +11,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <AntdRegistry>
-          {children}
-        </AntdRegistry>
+        <ErrorBoundary>
+          <AntdRegistry>
+            {children}
+          </AntdRegistry>
+        </ErrorBoundary>
       </body>
     </html>
   )
