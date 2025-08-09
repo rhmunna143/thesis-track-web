@@ -64,11 +64,15 @@ const useNotificationStore = create(
 
           return response
         } catch (error) {
+          console.warn('Notifications service unavailable:', error.message)
           set({
             loading: false,
-            error: error.message || 'Failed to fetch notifications'
+            error: error.message || 'Failed to fetch notifications',
+            notifications: [], // Provide empty array as fallback
+            pagination: pagination
           })
-          throw error
+          // Don't throw error to prevent crashes
+          return { data: [], pagination: pagination }
         }
       },
 
@@ -87,11 +91,15 @@ const useNotificationStore = create(
 
           return response
         } catch (error) {
+          console.warn('Unread notifications service unavailable:', error.message)
           set({
             loading: false,
-            error: error.message || 'Failed to fetch unread notifications'
+            error: error.message || 'Failed to fetch unread notifications',
+            notifications: [], // Provide empty array as fallback
+            unreadCount: 0
           })
-          throw error
+          // Don't throw error to prevent crashes
+          return { data: [] }
         }
       },
 

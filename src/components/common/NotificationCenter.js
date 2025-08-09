@@ -27,12 +27,29 @@ const NotificationCenter = () => {
 
   // Fetch notifications on component mount
   useEffect(() => {
-    fetchNotifications()
-    fetchUnreadCount()
+    const initializeNotifications = async () => {
+      try {
+        await fetchNotifications()
+      } catch (error) {
+        console.warn('Notifications service unavailable:', error.message)
+      }
+      
+      try {
+        await fetchUnreadCount()
+      } catch (error) {
+        console.warn('Unread count service unavailable:', error.message)
+      }
+    }
+    
+    initializeNotifications()
     
     // Set up polling for new notifications
-    const interval = setInterval(() => {
-      fetchUnreadCount()
+    const interval = setInterval(async () => {
+      try {
+        await fetchUnreadCount()
+      } catch (error) {
+        console.warn('Polling failed:', error.message)
+      }
     }, 30000) // Check every 30 seconds
 
     return () => clearInterval(interval)
