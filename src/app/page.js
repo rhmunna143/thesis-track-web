@@ -2,78 +2,90 @@
 
 import { Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-scree">
       {/* Header */}
-      <header className="bg-gradient-to-r from-blue-900 to-blue-800 px-4 py-4">
+      <header className="bg-gradient-to-r from-PrimaryBlue to-SecondaryBlue px-4 py-2 max-h-20">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
-              <span className="text-blue-900 font-bold text-sm">T</span>
-            </div>
-            <span className="text-white font-bold text-xl">THESIS TRACK</span>
+            <Image
+              src="/images/logo.png"
+              alt="Thesis Track Logo"
+              width={160}
+              height={60}
+            />
           </div>
 
           {/* Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
             <a
-              href="#"
-              className="text-white hover:text-green-400 transition-colors"
+              href="/"
+              className="text-white hover:text-SuccessGreen transition-colors"
             >
               Home
             </a>
             <a
-              href="#"
-              className="text-white hover:text-green-400 transition-colors"
+              href="/gallery"
+              className="text-white hover:text-SuccessGreen transition-colors"
             >
               Gallery
             </a>
             <a
-              href="#"
-              className="text-white hover:text-green-400 transition-colors"
+              href="/about"
+              className="text-white hover:text-SuccessGreen transition-colors"
             >
               About
             </a>
             <a
-              href="#"
-              className="text-white hover:text-green-400 transition-colors"
+              href="/contact"
+              className="text-white hover:text-SuccessGreen transition-colors"
             >
               Contact
             </a>
           </nav>
 
           {/* Get Start Button */}
-          <button className="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-full font-semibold transition-colors">
-            GET START
-          </button>
+          <Link href={"/login"}>
+            <button className="bg-SuccessGreen hover:bg-green-600 text-PrimaryBlue px-6 py-2 rounded-full font-semibold transition-colors">
+              GET START
+            </button>
+          </Link>
         </div>
       </header>
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-blue-900 to-blue-700 px-4 py-16">
+      <section className="bg-gradient-to-r from-blue-900 to-blue-700 px-4">
         <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-8 items-center">
           {/* Left Content */}
           <div className="text-white space-y-6">
-            <blockquote className="text-2xl md:text-3xl font-light italic leading-relaxed">
+            <blockquote className="text-2xl md:text-2xl font-rouge font-light italic leading-relaxed">
               "One child, one teacher, one book, and one pen can change the
               world."
             </blockquote>
-            <p className="text-lg opacity-90">- Malala Yousafzai</p>
-            <button className="bg-green-500 hover:bg-green-600 text-white px-8 py-3 rounded-full text-lg font-semibold transition-colors">
-              GET START NOW
-            </button>
+
+            <span className="opacity-90 font-rouge">- Malala Yousafzai</span>
+
+            <br/>
+            <br/>
+
+            <Link href={"/login"} className="pt-6">
+              <button className="bg-SuccessGreen hover:bg-green-600 text-PrimaryBlue px-8 py-3 rounded-full text-lg font-semibold transition-colors">
+                GET START NOW
+              </button>
+            </Link>
           </div>
 
           {/* Right Content - Graduate Image */}
           <div className="flex justify-center">
-            <div className="relative top-20">
+            <div className="relative top-6">
               <Image
                 src="/images/graduate-student.png"
                 alt="Graduate student in cap and gown"
-                width={400}
+                width={500}
                 height={500}
                 className="object-contain"
               />
