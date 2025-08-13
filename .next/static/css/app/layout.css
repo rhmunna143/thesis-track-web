@@ -541,6 +541,9 @@ video {
 .right-4 {
   right: 1rem;
 }
+.top-20 {
+  top: 5rem;
+}
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
@@ -1235,6 +1238,20 @@ html {
   font-family: 'Inter', system-ui, sans-serif;
 }
 
+/* color code global variables can use with Tailwind CSS*/
+
+:root {
+  --color-Primary-Blue: #036;
+  --color-Secondary-Blue: #005580;
+  --color-Accent-Yellow: #F7C948;
+  --color-Success-Green: #2ECC71;
+  --color-Gray: #F4F6F9;
+  --color-Warning-Yellow: #F1C40F;
+  --color-Error-Red: #E74C3C;
+  --color-Deep-Black: #000;
+  --color-White: #FFFFFF;
+}
+
 .hover\:bg-blue-700:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(29 78 216 / var(--tw-bg-opacity, 1));
@@ -1319,3 +1336,4 @@ html {
     padding-right: 2rem;
   }
 }
+

@@ -69,7 +69,7 @@ export default function HomePage() {
 
           {/* Right Content - Graduate Image */}
           <div className="flex justify-center">
-            <div className="relative">
+            <div className="relative top-20">
               <Image
                 src="/images/graduate-student.png"
                 alt="Graduate student in cap and gown"
