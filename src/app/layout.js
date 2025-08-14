@@ -1,6 +1,13 @@
 import './globals.css'
 import { AntdRegistry } from '@ant-design/nextjs-registry'
 import ErrorBoundary from '../components/common/ErrorBoundary'
+import { Poppins } from 'next/font/google'
+
+const poppins = Poppins({
+  weight: ['300', '400', '500', '600', '700'],
+  subsets: ['latin'],
+  display: 'swap',
+})
 
 export const metadata = {
   title: 'ThesisTrack - Project Proposal & Review System',
@@ -10,7 +17,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>
+      <body className={poppins.className}>
         <ErrorBoundary>
           <AntdRegistry>
             {children}

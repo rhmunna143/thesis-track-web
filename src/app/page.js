@@ -3,12 +3,19 @@
 import { Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { Rouge_Script } from "next/font/google";
+
+const rougeScript = Rouge_Script({
+  weight: "400",
+  subsets: ["latin"],
+  display: "swap",
+});
 
 export default function HomePage() {
   return (
     <div className="min-h-scree">
       {/* Header */}
-      <header className="bg-gradient-to-r from-PrimaryBlue to-SecondaryBlue px-4 py-2 max-h-20">
+      <header className="bg-gradient-to-r bg-PrimaryBlue px-4 py-2 max-h-20">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center space-x-2">
@@ -58,22 +65,26 @@ export default function HomePage() {
       </header>
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-blue-900 to-blue-700 px-4">
+      <section className="bg-gradient-to-r from-SecondaryBlue to-PrimaryBlue">
         <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-8 items-center">
           {/* Left Content */}
           <div className="text-white space-y-6">
-            <blockquote className="text-2xl md:text-2xl font-rouge font-light italic leading-relaxed">
+            <blockquote
+              className={`text-2xl md:text-5xl leading-relaxed ${rougeScript.className}`}
+            >
               "One child, one teacher, one book, and one pen can change the
               world."
             </blockquote>
 
-            <span className="opacity-90 font-rouge">- Malala Yousafzai</span>
+            <span className={`opacity-90 ${rougeScript.className} text-2xl`}>
+              - Malala Yousafzai
+            </span>
 
-            <br/>
-            <br/>
+            <br />
+            <br />
 
             <Link href={"/login"} className="pt-6">
-              <button className="bg-SuccessGreen hover:bg-green-600 text-PrimaryBlue px-8 py-3 rounded-full text-lg font-semibold transition-colors">
+              <button className="bg-SuccessGreen hover:bg-green-600 text-PrimaryBlue px-8 py-2 rounded-full text-lg font-semibold transition-colors">
                 GET START NOW
               </button>
             </Link>
@@ -97,14 +108,6 @@ export default function HomePage() {
       {/* Project Overview Section */}
       <section className="bg-blue-50 px-4 py-12">
         <div className="max-w-7xl mx-auto">
-          {/* Section Header */}
-          <div className="bg-blue-600 text-white px-6 py-3 rounded-t-lg inline-block">
-            <h2 className="text-xl font-semibold flex items-center">
-              <span className="mr-2">📋</span>
-              Project Over View
-            </h2>
-          </div>
-
           {/* Description */}
           <div className="bg-white p-6 rounded-b-lg rounded-tr-lg shadow-sm">
             <p className="text-gray-700 leading-relaxed">
