@@ -160,11 +160,9 @@ export default function HomePage() {
           <div className="grid md:grid-cols-3 gap-6">
             {/* Feature 1 */}
             <div
-              className="text-white p-8 text-center flex flex-col justify-center items-center transform transition duration-300 hover:-translate-y-2 hover:shadow-lg"
+              className="text-white p-8 text-center flex flex-col justify-center items-center transform transition duration-300 hover:-translate-y-2 hover:shadow-2xl hover:scale-105 hover:bg-gradient-to-br hover:from-blue-700 hover:to-green-400 hover:border-green-400 border-[3px] border-[#005580] bg-[#036] cursor-pointer"
               style={{
                 borderRadius: "0 30px",
-                border: "3px solid #005580",
-                background: "#036",
                 boxShadow: "7px 5px 4px 0 #69B6DD",
               }}
               data-aos="zoom-in"
@@ -177,11 +175,9 @@ export default function HomePage() {
 
             {/* Feature 2 */}
             <div
-              className="text-white p-8 text-center flex flex-col justify-center items-center transform transition duration-300 hover:-translate-y-2 hover:shadow-lg"
+              className="text-white p-8 text-center flex flex-col justify-center items-center transform transition duration-300 hover:-translate-y-2 hover:shadow-2xl hover:scale-105 hover:bg-gradient-to-br hover:from-blue-700 hover:to-green-400 hover:border-green-400 border-[3px] border-[#005580] bg-[#036] cursor-pointer"
               style={{
                 borderRadius: "0 30px",
-                border: "3px solid #005580",
-                background: "#036",
                 boxShadow: "7px 5px 4px 0 #69B6DD",
               }}
               data-aos="zoom-in"
@@ -192,11 +188,9 @@ export default function HomePage() {
 
             {/* Feature 3 */}
             <div
-              className="text-white p-8 text-center flex flex-col justify-center items-center transform transition duration-300 hover:-translate-y-2 hover:shadow-lg"
+              className="text-white p-8 text-center flex flex-col justify-center items-center transform transition duration-300 hover:-translate-y-2 hover:shadow-2xl hover:scale-105 hover:bg-gradient-to-br hover:from-blue-700 hover:to-green-400 hover:border-green-400 border-[3px] border-[#005580] bg-[#036] cursor-pointer"
               style={{
                 borderRadius: "0 30px",
-                border: "3px solid #005580",
-                background: "#036",
                 boxShadow: "7px 5px 4px 0 #69B6DD",
               }}
               data-aos="zoom-in"
@@ -211,9 +205,9 @@ export default function HomePage() {
             className="flex justify-center mt-8 space-x-2"
             data-aos="fade-up"
           >
-            <div className="w-3 h-3 bg-green-500 rounded-full transform transition duration-300 hover:scale-125"></div>
-            <div className="w-3 h-3 bg-gray-300 rounded-full transform transition duration-300 hover:scale-125"></div>
-            <div className="w-3 h-3 bg-gray-300 rounded-full transform transition duration-300 hover:scale-125"></div>
+            <div className="w-3 h-3 bg-green-500 rounded-full transform transition duration-300 hover:scale-125 cursor-pointer"></div>
+            <div className="w-3 h-3 bg-gray-300 rounded-full transform transition duration-300 hover:scale-125 cursor-pointer"></div>
+            <div className="w-3 h-3 bg-gray-300 rounded-full transform transition duration-300 hover:scale-125 cursor-pointer"></div>
           </div>
         </div>
       </section>
