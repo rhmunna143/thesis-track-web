@@ -4,11 +4,14 @@ import { Breadcrumb, Button, Badge, Dropdown, Avatar, Space } from 'antd'
 import { BellOutlined, UserOutlined, SettingOutlined, LogoutOutlined } from '@ant-design/icons'
 import { useRouter, usePathname } from 'next/navigation'
 import useAuthStore from '../../store/authStore'
+import NotificationCenter from './NotificationCenter'
+import useErrorHandler from '../../hooks/useErrorHandler'
 
 export default function Header({ collapsed, onCollapse }) {
   const router = useRouter()
   const pathname = usePathname()
   const { user, logout } = useAuthStore()
+  const { handleAsync } = useErrorHandler()
 
   const generateBreadcrumbs = () => {
     const pathSegments = pathname.split('/').filter(Boolean)
@@ -33,9 +36,11 @@ export default function Header({ collapsed, onCollapse }) {
     return breadcrumbs
   }
 
-  const handleLogout = () => {
-    logout()
-    router.push('/login')
+  const handleLogout = async () => {
+    await handleAsync(async () => {
+      await logout()
+      router.push('/login')
+    })
   }
 
   const userMenuItems = [
@@ -61,23 +66,6 @@ export default function Header({ collapsed, onCollapse }) {
     },
   ]
 
-  const notificationItems = [
-    {
-      key: '1',
-      label: 'New proposal submitted',
-      description: '2 minutes ago',
-    },
-    {
-      key: '2',
-      label: 'Review deadline approaching',
-      description: '1 hour ago',
-    },
-    {
-      key: '3',
-      label: 'Proposal approved',
-      description: '2 hours ago',
-    },
-  ]
 
   return (
     <div className="flex items-center justify-between p-4 bg-white border-b border-gray-200">
@@ -89,29 +77,7 @@ export default function Header({ collapsed, onCollapse }) {
       </div>
 
       <Space size="middle">
-        <Dropdown
-          menu={{
-            items: notificationItems.map(item => ({
-              key: item.key,
-              label: (
-                <div>
-                  <div className="font-medium">{item.label}</div>
-                  <div className="text-xs text-gray-500">{item.description}</div>
-                </div>
-              ),
-            })),
-          }}
-          placement="bottomRight"
-          arrow
-        >
-          <Badge count={3} size="small">
-            <Button
-              type="text"
-              icon={<BellOutlined />}
-              className="flex items-center justify-center"
-            />
-          </Badge>
-        </Dropdown>
+        <NotificationCenter />
 
         <Dropdown
           menu={{ items: userMenuItems }}
@@ -119,7 +85,11 @@ export default function Header({ collapsed, onCollapse }) {
           arrow
         >
           <div className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 px-2 py-1 rounded">
-            <Avatar size={32} icon={<UserOutlined />} />
+            <Avatar 
+              size={32} 
+              icon={<UserOutlined />}
+              src={user?.profile_picture || user?.profilePicture}
+            />
             <div className="hidden sm:block">
               <div className="font-medium text-sm">{user?.name}</div>
               <div className="text-xs text-gray-500 capitalize">

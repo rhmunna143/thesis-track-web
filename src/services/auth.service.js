@@ -1,15 +1,7 @@
 import api from './api'
 
 export const authService = {
-  login: async (credentials) => {
-    try {
-      const response = await api.post('/auth/login', credentials)
-      return response.data
-    } catch (error) {
-      throw error.response?.data || error
-    }
-  },
-
+  // Public student signup
   signup: async (userData) => {
     try {
       const response = await api.post('/auth/signup', userData)
@@ -19,44 +11,46 @@ export const authService = {
     }
   },
 
-  logout: async () => {
+  // User login
+  login: async (credentials) => {
     try {
-      await api.post('/auth/logout')
-    } catch (error) {
-      console.error('Logout error:', error)
-    }
-  },
-
-  refreshToken: async () => {
-    try {
-      const response = await api.post('/auth/refresh')
+      const response = await api.post('/auth/login', credentials)
       return response.data
     } catch (error) {
       throw error.response?.data || error
     }
   },
 
-  forgotPassword: async (email) => {
+  // Admin-only user creation (TEACHER or STUDENT roles only)
+  adminRegister: async (userData) => {
     try {
-      const response = await api.post('/auth/forgot-password', { email })
+      const response = await api.post('/auth/register', userData)
       return response.data
     } catch (error) {
       throw error.response?.data || error
     }
   },
 
-  resetPassword: async (token, password) => {
+  // Get current user profile
+  getCurrentUser: async () => {
     try {
-      const response = await api.post('/auth/reset-password', { token, password })
+      const response = await api.get('/me')
       return response.data
     } catch (error) {
       throw error.response?.data || error
     }
   },
 
-  verifyEmail: async (token) => {
+  // Client-side logout (no API call needed)
+  logout: () => {
+    // Just clear client state - no API call needed
+    return Promise.resolve()
+  },
+
+  // Verify token by getting current user
+  verifyToken: async () => {
     try {
-      const response = await api.post('/auth/verify-email', { token })
+      const response = await api.get('/me')
       return response.data
     } catch (error) {
       throw error.response?.data || error
