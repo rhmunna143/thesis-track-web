@@ -1,9 +1,8 @@
 import "./globals.css";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import ErrorBoundary from "../components/common/ErrorBoundary";
+import ClientShell from "../components/ClientShell";
 import { Poppins } from "next/font/google";
-// AOS (Animate On Scroll) is initialized in client components where needed
-// to avoid server-side 'document is not defined' errors.
 
 const poppins = Poppins({
   weight: ["300", "400", "500", "600", "700"],
@@ -22,7 +21,9 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={poppins.className}>
         <ErrorBoundary>
-          <AntdRegistry>{children}</AntdRegistry>
+          <ClientShell>
+            <AntdRegistry>{children}</AntdRegistry>
+          </ClientShell>
         </ErrorBoundary>
       </body>
     </html>
