@@ -9,9 +9,10 @@ import Link from "next/link";
 export default function ClientShell({ children }) {
   const pathname = usePathname() || "/";
 
-  // pages that should not show header/footer
+  // pages or route prefixes that should not show header/footer (auth pages + dashboard group)
   const hideShellFor = ["/login", "/signup"];
-  const hide = hideShellFor.includes(pathname);
+  const hidePrefixes = ["/admin", "/teacher", "/student"];
+  const hide = hideShellFor.includes(pathname) || hidePrefixes.some((p) => pathname.startsWith(p));
 
   if (hide) {
     return <>{children}</>;
