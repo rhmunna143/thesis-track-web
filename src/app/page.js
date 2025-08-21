@@ -66,7 +66,7 @@ export default function HomePage() {
 
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-SecondaryBlue to-PrimaryBlue">
-        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-8 items-center">
+        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-8 items-center px-4 lg:px-0 pt-5 lg:pt-0">
           {/* Left Content */}
           <div className="text-white space-y-6">
             <blockquote
@@ -84,7 +84,7 @@ export default function HomePage() {
             <br />
 
             <Link href={"/login"} className="pt-6">
-              <button className="bg-SuccessGreen hover:bg-green-600 text-PrimaryBlue px-8 py-2 rounded-full text-lg font-semibold transition-colors">
+              <button className="bg-SuccessGreen hover:bg-green-600 text-PrimaryBlue px-8 py-2 rounded-full text-lg font-semibold transition-colors md:mb-5">
                 GET START NOW
               </button>
             </Link>
@@ -92,7 +92,7 @@ export default function HomePage() {
 
           {/* Right Content - Graduate Image */}
           <div className="flex justify-center">
-            <div className="relative top-6">
+            <div className="relative top-4 md:top-6">
               <Image
                 src="/images/graduate-student.png"
                 alt="Graduate student in cap and gown"
@@ -182,7 +182,7 @@ export default function HomePage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gradient-to-r from-blue-900 to-blue-800 px-4 py-12">
+      <footer className="bg-PrimaryBlue px-4 py-12">
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-2 gap-8 items-center">
             {/* Contact Section */}
@@ -209,15 +209,18 @@ export default function HomePage() {
             {/* Logo and Copyright */}
             <div className="text-right">
               <div className="flex items-center justify-end space-x-2 mb-4">
-                <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
-                  <span className="text-blue-900 font-bold text-sm">T</span>
+                <div className="flex items-center space-x-2">
+                  <Image
+                    src="/images/logo.png"
+                    alt="Thesis Track Logo"
+                    width={160}
+                    height={60}
+                  />
                 </div>
-                <span className="text-white font-bold text-xl">
-                  THESIS TRACK
-                </span>
               </div>
+
               <p className="text-gray-300 text-sm">
-                ©2023 THESIS TRACK BY AHMED ALL RIGHT RESERVED
+                ©2025 THESIS TRACK. ALL RIGHT RESERVED
               </p>
             </div>
           </div>
