@@ -130,7 +130,15 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-3 gap-6">
             {/* Feature 1 */}
-            <div className="bg-gradient-to-br from-blue-800 to-blue-900 text-white p-8 rounded-lg text-center">
+            <div
+              className="text-white p-8 text-center flex flex-col justify-center items-center"
+              style={{
+                borderRadius: "0 30px",
+                border: "3px solid #005580",
+                background: "#036",
+                boxShadow: "7px 5px 4px 0 #69B6DD",
+              }}
+            >
               <h3 className="text-xl font-semibold mb-4">
                 Write your Project Proposal
                 <br />& Save PDF
@@ -138,12 +146,28 @@ export default function HomePage() {
             </div>
 
             {/* Feature 2 */}
-            <div className="bg-gradient-to-br from-blue-700 to-blue-800 text-white p-8 rounded-lg text-center">
+            <div
+              className="text-white p-8 text-center flex flex-col justify-center items-center"
+              style={{
+                borderRadius: "0 30px",
+                border: "3px solid #005580",
+                background: "#036",
+                boxShadow: "7px 5px 4px 0 #69B6DD",
+              }}
+            >
               <h3 className="text-xl font-semibold mb-4">Upload</h3>
             </div>
 
             {/* Feature 3 */}
-            <div className="bg-gradient-to-br from-blue-600 to-blue-700 text-white p-8 rounded-lg text-center">
+            <div
+              className="text-white p-8 text-center flex flex-col justify-center items-center"
+              style={{
+                borderRadius: "0 30px",
+                border: "3px solid #005580",
+                background: "#036",
+                boxShadow: "7px 5px 4px 0 #69B6DD",
+              }}
+            >
               <h3 className="text-xl font-semibold mb-4">Wait For Review</h3>
             </div>
           </div>
