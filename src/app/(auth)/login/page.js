@@ -46,10 +46,12 @@ export default function LoginPage() {
     <>
       {/* Login Card */}
       <div className="relative z-10 w-full max-w-md">
-        <div className="bg-gradient-to-b from-PrimaryBlue backdrop-blur-sm border-2 border-SuccessGreen rounded-lg p-8 shadow-2xl">
+        <div className="bg-gradient-to-b from-PrimaryBlue to-blue backdrop-blur-sm border border-SuccessGreen rounded-2xl p-8 shadow-2xl shadow-PrimaryBlue">
           {/* Header */}
           <div className="text-center mb-8">
-            <h1 className="text-2xl font-semibold text-white mb-2">LOGIN</h1>
+            <h1 className="text-2xl font-semibold text-white mb-2 tracking-wider">
+              LOGIN
+            </h1>
           </div>
 
           {/* Error Alert */}
@@ -78,9 +80,9 @@ export default function LoginPage() {
             >
               <div className="relative">
                 <Input
-                  prefix={<MailOutlined className="text-gray-300" />}
+                  prefix={<MailOutlined className="text-gray-400 mr-2" />}
                   placeholder="Email"
-                  className="bg-transparent border-2 border-SuccessGreen rounded-full px-4 py-3 text-white placeholder-gray-300 hover:border-yellow-400 focus:border-yellow-400 focus:shadow-none"
+                  className="custom-input bg-transparent border border-[#2C5F8D] rounded-full px-5 py-3 text-white placeholder-gray-400 hover:border-[#3B82F6] focus:border-[#3B82F6] transition-all duration-300"
                   style={{
                     backgroundColor: "transparent",
                     color: "white",
@@ -98,14 +100,14 @@ export default function LoginPage() {
               className="mb-6"
             >
               <Input.Password
-                prefix={<LockOutlined className="text-gray-300" />}
+                prefix={<LockOutlined className="text-gray-400 mr-2" />}
                 placeholder="Password"
-                className="bg-transparent border-2 border-yellow-400/60 rounded-full px-4 py-3 text-white placeholder-gray-300 hover:border-yellow-400 focus:border-yellow-400"
+                className="custom-input-password bg-transparent border border-[#2C5F8D] rounded-full px-5 py-3 text-white placeholder-gray-400 hover:border-[#3B82F6] focus:border-[#3B82F6] transition-all duration-300"
                 iconRender={(visible) =>
                   visible ? (
-                    <EyeTwoTone className="text-gray-300" />
+                    <EyeTwoTone twoToneColor="#9CA3AF" />
                   ) : (
-                    <EyeInvisibleOutlined className="text-gray-300" />
+                    <EyeInvisibleOutlined className="text-gray-400" />
                   )
                 }
                 style={{
@@ -118,8 +120,10 @@ export default function LoginPage() {
             {/* Remember Me */}
             <Form.Item className="mb-6">
               <Form.Item name="remember" valuePropName="checked" noStyle>
-                <Checkbox className="text-white">
-                  <span className="text-white ml-2">Remember Me</span>
+                <Checkbox className="text-gray-300">
+                  <span className="text-gray-300 ml-2 text-sm">
+                    Remember Me
+                  </span>
                 </Checkbox>
               </Form.Item>
             </Form.Item>
@@ -130,10 +134,10 @@ export default function LoginPage() {
                 type="primary"
                 htmlType="submit"
                 loading={loading}
-                className="w-full h-12 bg-PrimaryBlue hover:bg-blue-700 border-2 border-yellow-400/60 rounded-full text-white font-semibold text-lg transition-all duration-300 hover:border-yellow-400"
+                className="w-full h-12 bg-PrimaryBlue hover:bg-[#2C5F8D] border border-[#2C5F8D] rounded-full text-white font-medium text-base transition-all duration-300 shadow-lg hover:shadow-xl"
                 style={{
-                  backgroundColor: "#1e40af",
-                  borderColor: "rgba(251, 191, 36, 0.6)",
+                  backgroundColor: "#1B4F72",
+                  borderColor: "#2C5F8D",
                 }}
               >
                 LOGIN
@@ -143,11 +147,11 @@ export default function LoginPage() {
 
           {/* Sign Up Link */}
           <div className="text-center">
-            <p className="text-white">
+            <p className="text-gray-300 text-sm">
               Don't have an account?{" "}
               <Link
                 href="/signup"
-                className="text-teal-400 hover:text-teal-300 font-semibold transition-colors"
+                className="text-[#5DADE2] hover:text-[#85C1E9] font-medium transition-colors"
               >
                 SignUp
               </Link>
@@ -158,6 +162,29 @@ export default function LoginPage() {
 
       {/* Custom Styles */}
       <style jsx global>{`
+        /* Input Base Styles */
+        .custom-input,
+        .custom-input-password {
+          background: transparent !important;
+          border: 1px solid #2c5f8d !important;
+          border-radius: 9999px !important;
+          height: 48px !important;
+          font-size: 15px !important;
+        }
+
+        .custom-input:hover,
+        .custom-input-password:hover {
+          border-color: #3b82f6 !important;
+        }
+
+        .custom-input:focus,
+        .custom-input-password:focus,
+        .custom-input-password.ant-input-affix-wrapper-focused {
+          border-color: #3b82f6 !important;
+          box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1) !important;
+        }
+
+        /* Ant Design Input Overrides */
         .ant-input {
           background: transparent !important;
           color: white !important;
@@ -165,7 +192,7 @@ export default function LoginPage() {
         }
 
         .ant-input::placeholder {
-          color: #d1d5db !important;
+          color: #9ca3af !important;
         }
 
         .ant-input-password {
@@ -178,32 +205,57 @@ export default function LoginPage() {
           color: white !important;
         }
 
-        .ant-input {
+        .ant-input-affix-wrapper {
           background: transparent !important;
+          border: 1px solid #2c5f8d !important;
+          border-radius: 9999px !important;
         }
 
+        .ant-input-affix-wrapper:hover {
+          border-color: #3b82f6 !important;
+        }
+
+        .ant-input-affix-wrapper-focused {
+          border-color: #3b82f6 !important;
+          box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1) !important;
+        }
+
+        /* Checkbox Styles */
         .ant-checkbox-wrapper {
-          color: white !important;
+          color: #9ca3af !important;
         }
 
         .ant-checkbox-checked .ant-checkbox-inner {
-          background-color: #0891b2 !important;
-          border-color: #0891b2 !important;
+          background-color: #3b82f6 !important;
+          border-color: #3b82f6 !important;
         }
 
+        .ant-checkbox-inner {
+          background-color: transparent !important;
+          border-color: #2c5f8d !important;
+        }
+
+        /* Button Styles */
         .ant-btn-primary {
-          background: #1e40af !important;
-          border-color: rgba(251, 191, 36, 0.6) !important;
+          background: #1b4f72 !important;
+          border-color: #2c5f8d !important;
           border-radius: 9999px !important;
         }
 
         .ant-btn-primary:hover {
-          background: #1d4ed8 !important;
-          border-color: rgb(251, 191, 36) !important;
+          background: #2c5f8d !important;
+          border-color: #3b82f6 !important;
         }
 
+        /* Form Item Label */
         .ant-form-item-label > label {
           color: white !important;
+        }
+
+        /* Remove focus outlines */
+        .ant-input:focus,
+        .ant-input-focused {
+          box-shadow: none !important;
         }
       `}</style>
     </>
