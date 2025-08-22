@@ -1,5 +1,80 @@
 # Development Sessions & Issue Resolution Log
 
+## Session 6: Layout & Navigation Enhancement (August 21-22, 2025)
+**Branch**: dashboard-sidebar (switched from customize/login)  
+**Objective**: Fix navigation issues and improve authentication layout
+
+### Issues Addressed:
+1. **Dashboard Header/Footer Duplication**: Global header/footer showing in dashboard routes
+2. **Mobile Navigation Broken**: Hamburger menu not functional due to missing handlers
+3. **Auth Layout Enhancement**: Need for background image in authentication pages
+4. **Navigation Visibility**: Desktop navigation missing on medium/large devices
+
+### Solutions Implemented:
+
+#### 1. Global Shell Path-Based Hiding
+**File**: `src/components/ClientShell.js`
+- Added route prefix detection for dashboard routes
+- Updated logic: `hideShellFor` + `hidePrefixes` with `startsWith` check
+- Prefixes: `/admin`, `/teacher`, `/student`
+
+#### 2. Mobile Menu Functionality Fix
+**File**: `src/components/ClientShell.js` 
+- Added missing `toggleMenu` function: `() => setIsMenuOpen(s => !s)`
+- Implemented auto-close on route change with `useEffect`
+- Fixed responsive classes: `sm:hidden` for mobile, `sm:flex` for desktop
+
+#### 3. Auth Layout Background
+**File**: `src/app/(auth)/layout.js`
+- Implemented background image: `url('/images/auth-bg.jpg')`
+- Added background properties: cover, center, no-repeat
+- Enhanced content panel: translucent white with backdrop blur
+
+#### 4. Input Styling Refinement
+**File**: `src/app/(auth)/login/page.js`
+- Changed border-radius from `9999px` (pill) to `12px`
+- Maintained transparent background and white text
+- Applied to both `.ant-input` and `.ant-input-password`
+
+### Technical Details:
+
+#### Route Detection Logic
+```javascript
+const hideShellFor = ["/login", "/signup"];
+const hidePrefixes = ["/admin", "/teacher", "/student"];
+const hide = hideShellFor.includes(pathname) || 
+             hidePrefixes.some((p) => pathname.startsWith(p));
+```
+
+#### Responsive Navigation Classes
+- Mobile hamburger: `sm:hidden` (visible below 640px)
+- Desktop navigation: `hidden sm:flex` (hidden below 640px, flex above)
+- Mobile overlay: `sm:hidden` (hidden above 640px)
+
+#### Auth Layout Structure
+```javascript
+<div className="min-h-screen flex items-center justify-center..." 
+     style={{ backgroundImage: "url('/images/auth-bg.jpg')" }}>
+  <div className="max-w-md w-full bg-white/60 backdrop-blur-sm...">
+    {children}
+  </div>
+</div>
+```
+
+### Testing & Validation:
+- ✅ Dashboard routes no longer show global header/footer
+- ✅ Mobile menu opens/closes correctly and auto-closes on navigation
+- ✅ Desktop navigation visible on tablets and larger screens
+- ✅ Auth pages display background image with readable content
+- ✅ Input fields have proper styling and transparency
+
+### Files Modified:
+1. `src/components/ClientShell.js` - Navigation fixes and responsive classes
+2. `src/app/(auth)/layout.js` - Background image implementation
+3. `src/app/(auth)/login/page.js` - Input border-radius adjustment
+
+---
+
 ## Session 1: Profile System Issues (August 10, 2025)
 **Initial Problem**: Profile information not showing, profile pictures missing, default values not displaying
 

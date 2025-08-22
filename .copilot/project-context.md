@@ -4,8 +4,24 @@
 **Name**: Thesis Track Web Application  
 **Type**: Next.js 14 Academic Management System  
 **Repository**: thesis-track-web (Owner: rhmunna143)  
-**Branch**: function  
-**Last Updated**: August 13, 2025  
+**Branch**: dashboard-sidebar (formerly function)  
+**Last Updated**: August 22, 2025  
+
+## Recent Major Updates (August 21-22, 2025)
+
+### Layout & Navigation Enhancements
+- **Auth Layout Background**: Implemented `public/images/auth-bg.jpg` as full-screen background
+- **Mobile Navigation Fix**: Resolved hamburger menu functionality in `ClientShell.js`
+  - Added `toggleMenu` handler and auto-close on route changes
+  - Fixed responsive breakpoints (hamburger on `<sm`, desktop nav on `≥sm`)
+- **Dashboard Layout Isolation**: Properly separated dashboard layout from global shell
+  - Global header/footer hidden for `/admin`, `/teacher`, `/student` routes
+  - Dedicated dashboard layout with sidebar and header components
+
+### UI/UX Improvements
+- **Input Styling**: Updated auth forms with 12px border-radius and transparent backgrounds
+- **Responsive Design**: Fixed navigation visibility across all device sizes
+- **Layout Groups**: Proper Next.js layout group implementation for auth and dashboard
 
 ## Technology Stack
 
