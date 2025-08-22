@@ -1,4 +1,21 @@
-# Project README - Copilot Memory
+# Copilot Memory - Quick Reference (Updated August 22, 2025)
+
+## Recent Major Updates
+
+### Layout & Navigation Fixes
+- **Auth Background**: Added `public/images/auth-bg.jpg` to auth layout with translucent panel
+- **Mobile Menu**: Fixed hamburger functionality with proper toggle and auto-close
+- **Responsive Navigation**: Desktop nav visible on medium+ devices, mobile menu on small
+- **Dashboard Isolation**: Global header/footer hidden on dashboard routes
+
+### Current Branch: `dashboard-sidebar`
+- Switched from `customize/login` to continue dashboard enhancements
+- Focus on navigation architecture and layout improvements
+
+## Key Files Modified Recently
+- `src/components/ClientShell.js` - Navigation fixes and responsive classes
+- `src/app/(auth)/layout.js` - Background image implementation  
+- `src/app/(auth)/login/page.js` - Input styling (12px border-radius)
 
 ## Quick Start Commands
 

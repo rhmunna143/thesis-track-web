@@ -146,14 +146,15 @@ export default function Sidebar({ collapsed, onCollapse }) {
         <div className="flex items-center gap-3">
           {!collapsed && (
             <>
-              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+              <div className="w-8 h-11 bg-primary rounded-lg flex items-center justify-center">
                 <BookOutlined className="text-white" />
               </div>
               <span className="font-bold text-lg">ThesisTrack</span>
             </>
           )}
+
           {collapsed && (
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center mx-auto">
+            <div className="w-8 h-11 bg-primary rounded-lg flex items-center justify-center mx-auto">
               <BookOutlined className="text-white" />
             </div>
           )}
@@ -170,28 +171,32 @@ export default function Sidebar({ collapsed, onCollapse }) {
         }))}
       />
 
-      <div className="absolute bottom-4 left-4 right-4">
+      <div className="absolute bottom-4 left-4 right-4 z-10">
         {!collapsed ? (
-          <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+          <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg relative z-20">
             <Avatar size={32} icon={<UserOutlined />} />
             <div className="flex-1 min-w-0">
               <div className="font-medium text-sm truncate">{user?.name}</div>
               <div className="text-xs text-gray-500 capitalize">{user?.role?.toLowerCase()}</div>
             </div>
+
             <Dropdown
+            
               menu={{ items: userMenuItems }}
               placement="topRight"
               arrow
+              overlayClassName="z-50"
             >
               <Button type="text" size="small" icon={<SettingOutlined />} />
             </Dropdown>
           </div>
         ) : (
-          <div className="flex justify-center">
+          <div className="flex justify-center relative top-6 z-20">
             <Dropdown
               menu={{ items: userMenuItems }}
               placement="topRight"
               arrow
+              overlayClassName="z-50"
             >
               <Avatar size={32} icon={<UserOutlined />} className="cursor-pointer" />
             </Dropdown>

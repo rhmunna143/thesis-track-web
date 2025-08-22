@@ -1,5 +1,46 @@
 # Component Architecture Documentation
 
+## Layout System Architecture (Updated August 22, 2025)
+
+### Layout Groups (Next.js 14 App Router)
+The application uses Next.js layout groups for clean separation:
+
+#### 1. Root Layout (`src/app/layout.js`)
+- **Purpose**: Global application wrapper
+- **Font Management**: Poppins via Next.js font optimization
+- **Components**: `ErrorBoundary`, `ClientShell`, `AntdRegistry`
+- **Scope**: All routes except layout group overrides
+
+#### 2. Auth Layout Group (`src/app/(auth)/layout.js`)
+- **Purpose**: Authentication pages (login, signup)
+- **Background**: `public/images/auth-bg.jpg` with cover styling
+- **Panel**: Translucent white container (`bg-white/60 backdrop-blur-sm`)
+- **Isolation**: No global header/footer via `ClientShell` logic
+
+#### 3. Dashboard Layout Group (`src/app/(dashboard)/layout.js`)
+- **Purpose**: Dashboard interface for all user roles
+- **Components**: `Sidebar`, `Header` (dashboard-specific)
+- **State**: Collapsed sidebar state management
+- **Content**: Max-width container with proper spacing
+- **Isolation**: No global header/footer via `ClientShell` logic
+
+### Navigation Architecture
+
+#### 1. Global Navigation (`src/components/ClientShell.js`)
+- **Mobile Strategy**: Hamburger menu with overlay panel
+- **Desktop Strategy**: Horizontal navigation bar
+- **Responsive Breakpoints**: 
+  - Mobile: `< 640px` (sm breakpoint)
+  - Desktop: `≥ 640px`
+- **Route-Based Hiding**: Dashboard and auth routes excluded
+- **Auto-Close**: Menu closes automatically on route change
+
+#### 2. Dashboard Navigation (`src/components/common/Sidebar.js`)
+- **Role-Based Menus**: Different menu items per user role
+- **Collapsible Design**: Toggle between expanded and collapsed states
+- **User Profile**: Integrated user info with dropdown menu
+- **Navigation State**: Active route highlighting
+
 ## State Management Architecture
 
 ### Zustand Stores
