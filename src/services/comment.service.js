@@ -2,12 +2,9 @@ import api from './api'
 
 export const commentService = {
   // Add comment to proposal (Teachers and Admin only)
-  addComment: async (proposalId, content) => {
+  addComment: async (commentData) => {
     try {
-      const response = await api.post('/comments', {
-        proposalId,
-        content
-      })
+      const response = await api.post('/comments', commentData)
       return response.data
     } catch (error) {
       throw error.response?.data || error
@@ -15,6 +12,16 @@ export const commentService = {
   },
 
   // Get comments for a proposal
+  getProposalComments: async (proposalId) => {
+    try {
+      const response = await api.get(`/comments/proposal/${proposalId}`)
+      return response.data
+    } catch (error) {
+      throw error.response?.data || error
+    }
+  },
+
+  // Get comments for a proposal (alternative method name)
   getCommentsByProposal: async (proposalId) => {
     try {
       const response = await api.get(`/comments/proposal/${proposalId}`)

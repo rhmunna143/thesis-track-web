@@ -23,6 +23,28 @@ export const proposalService = {
     }
   },
 
+  // Get all proposals (Admin only)
+  getAllProposals: async (params = {}) => {
+    try {
+      const queryParams = new URLSearchParams()
+      
+      // Add pagination parameters
+      if (params.page) queryParams.append('page', params.page)
+      if (params.limit) queryParams.append('limit', params.limit)
+      
+      // Add filtering parameters
+      if (params.status) queryParams.append('status', params.status)
+      if (params.search) queryParams.append('search', params.search)
+      if (params.supervisorId) queryParams.append('supervisorId', params.supervisorId)
+      if (params.studentId) queryParams.append('studentId', params.studentId)
+
+      const response = await api.get(`/proposals?${queryParams.toString()}`)
+      return response.data
+    } catch (error) {
+      throw error.response?.data || error
+    }
+  },
+
   // Get proposal by ID
   getProposalById: async (proposalId) => {
     try {
