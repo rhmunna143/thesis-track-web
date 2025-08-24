@@ -1,0 +1,357 @@
+/* Analytics Dashboard Styles */
+.analytics-dashboard {
+  padding: 24px;
+  background: #f5f5f5;
+  min-height: 100vh;
+}
+
+/* Header Section */
+.analytics-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+  background: white;
+  padding: 24px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.header-content h2 {
+  margin: 0 0 8px 0 !important;
+  color: #1f2937 !important;
+  font-weight: 600 !important;
+}
+
+.header-content .ant-typography {
+  margin: 0 !important;
+  color: #6b7280 !important;
+}
+
+.header-actions .ant-space {
+  flex-wrap: wrap;
+}
+
+/* Statistics Cards */
+.stats-row {
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  border: none !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
+  border-radius: 8px !important;
+  transition: all 0.3s ease !important;
+}
+
+.stat-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1) !important;
+  transform: translateY(-2px);
+}
+
+.stat-card .ant-statistic-title {
+  color: #6b7280 !important;
+  font-weight: 500 !important;
+  margin-bottom: 8px !important;
+}
+
+.stat-card .ant-statistic-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.growth-indicator {
+  font-size: 12px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-left: 8px;
+}
+
+.growth-indicator.positive {
+  color: #10b981;
+  background: #d1fae5;
+}
+
+.growth-indicator.negative {
+  color: #ef4444;
+  background: #fee2e2;
+}
+
+/* Charts Section */
+.charts-row {
+  margin-bottom: 24px;
+}
+
+.chart-card {
+  border: none !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
+  border-radius: 8px !important;
+  height: 100%;
+}
+
+.chart-card .ant-card-head {
+  border-bottom: 1px solid #f0f0f0 !important;
+  padding: 16px 24px !important;
+}
+
+.chart-card .ant-card-head-title {
+  color: #1f2937 !important;
+  font-weight: 600 !important;
+  font-size: 16px !important;
+}
+
+.chart-card .ant-card-body {
+  padding: 24px !important;
+}
+
+.chart-container {
+  width: 100%;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chart-container .ant-empty {
+  margin: 0;
+}
+
+/* Tables Section */
+.tables-row {
+  margin-bottom: 24px;
+}
+
+.table-card {
+  border: none !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
+  border-radius: 8px !important;
+  height: 100%;
+}
+
+.table-card .ant-card-head {
+  border-bottom: 1px solid #f0f0f0 !important;
+  padding: 16px 24px !important;
+}
+
+.table-card .ant-card-head-title {
+  color: #1f2937 !important;
+  font-weight: 600 !important;
+  font-size: 16px !important;
+}
+
+.table-card .ant-card-body {
+  padding: 0 !important;
+}
+
+.table-card .ant-table-thead > tr > th {
+  background: #f9fafb !important;
+  border-bottom: 1px solid #e5e7eb !important;
+  color: #374151 !important;
+  font-weight: 600 !important;
+}
+
+.table-card .ant-table-tbody > tr:hover > td {
+  background: #f9fafb !important;
+}
+
+/* Details Modal */
+.details-modal-content {
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.details-modal-content .ant-table-thead > tr > th {
+  background: #f9fafb !important;
+  border-bottom: 1px solid #e5e7eb !important;
+  color: #374151 !important;
+  font-weight: 600 !important;
+}
+
+/* Loading State */
+.analytics-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  gap: 16px;
+}
+
+.analytics-loading p {
+  color: #6b7280;
+  margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .analytics-header {
+    flex-direction: column;
+    gap: 16px;
+    align-items: stretch;
+  }
+  
+  .header-actions {
+    align-self: stretch;
+  }
+  
+  .header-actions .ant-space {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 768px) {
+  .analytics-dashboard {
+    padding: 16px;
+  }
+  
+  .analytics-header {
+    padding: 16px;
+  }
+  
+  .header-actions .ant-space {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .header-actions .ant-space > .ant-space-item {
+    width: 100%;
+  }
+  
+  .header-actions .ant-select,
+  .header-actions .ant-picker,
+  .header-actions .ant-btn {
+    width: 100% !important;
+  }
+  
+  .chart-container {
+    height: 250px;
+  }
+  
+  .stat-card .ant-statistic-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .growth-indicator {
+    align-self: flex-end;
+  }
+}
+
+@media (max-width: 480px) {
+  .analytics-dashboard {
+    padding: 12px;
+  }
+  
+  .analytics-header {
+    padding: 12px;
+  }
+  
+  .chart-container {
+    height: 200px;
+  }
+  
+  .table-card .ant-table {
+    font-size: 12px;
+  }
+}
+
+/* Dark mode support (if needed) */
+@media (prefers-color-scheme: dark) {
+  .analytics-dashboard {
+    background: #111827 !important;
+  }
+  
+  .analytics-header,
+  .stat-card,
+  .chart-card,
+  .table-card {
+    background: #1f2937 !important;
+    border-color: #374151 !important;
+  }
+  
+  .header-content h2,
+  .chart-card .ant-card-head-title,
+  .table-card .ant-card-head-title {
+    color: #f9fafb !important;
+  }
+  
+  .header-content .ant-typography,
+  .stat-card .ant-statistic-title {
+    color: #d1d5db !important;
+  }
+}
+
+/* Custom scrollbar for modal */
+.details-modal-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.details-modal-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.details-modal-content::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.details-modal-content::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Animation for cards */
+.stat-card,
+.chart-card,
+.table-card {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Status colors for consistent theming */
+.status-pending { color: #f59e0b !important; }
+.status-approved { color: #10b981 !important; }
+.status-rejected { color: #ef4444 !important; }
+.status-revision { color: #8b5cf6 !important; }
+
+/* Progress bar customization */
+.ant-progress-bg {
+  transition: all 0.3s ease !important;
+}
+
+/* Button hover effects */
+.analytics-header .ant-btn:hover,
+.chart-card .ant-btn:hover,
+.table-card .ant-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Select dropdown styling */
+.ant-select-dropdown {
+  border-radius: 8px !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Date picker styling */
+.ant-picker-dropdown {
+  border-radius: 8px !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1) !important;
+}
