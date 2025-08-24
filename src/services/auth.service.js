@@ -31,6 +31,16 @@ export const authService = {
     }
   },
 
+  // Alias for adminRegister for consistency
+  registerUser: async (userData) => {
+    try {
+      const response = await api.post('/auth/register', userData)
+      return response.data
+    } catch (error) {
+      throw error.response?.data || error
+    }
+  },
+
   // Get current user profile
   getCurrentUser: async () => {
     try {

@@ -105,4 +105,74 @@ export const userService = {
       throw error.response?.data || error
     }
   },
+
+  // Update user profile by ID (Admin only)
+  updateUserProfile: async (userId, profileData) => {
+    try {
+      const response = await api.put(`/users/${userId}`, profileData)
+      return response.data
+    } catch (error) {
+      throw error.response?.data || error
+    }
+  },
+
+  // Delete user (Admin only)
+  deleteUser: async (userId) => {
+    try {
+      const response = await api.delete(`/users/${userId}`)
+      return response.data
+    } catch (error) {
+      throw error.response?.data || error
+    }
+  },
+
+  // Create new user (Admin only)
+  createUser: async (userData) => {
+    try {
+      const response = await api.post('/users', userData)
+      return response.data
+    } catch (error) {
+      throw error.response?.data || error
+    }
+  },
+
+  // Reset user password (Admin only)
+  resetUserPassword: async (userId, newPassword) => {
+    try {
+      const response = await api.patch(`/users/${userId}/password`, { password: newPassword })
+      return response.data
+    } catch (error) {
+      throw error.response?.data || error
+    }
+  },
+
+  // Toggle user status (Admin only)
+  toggleUserStatus: async (userId, isActive) => {
+    try {
+      const response = await api.patch(`/users/${userId}/status`, { isActive })
+      return response.data
+    } catch (error) {
+      throw error.response?.data || error
+    }
+  },
+
+  // Bulk import users (Admin only)
+  bulkImportUsers: async (userData) => {
+    try {
+      const response = await api.post('/users/bulk-import', { users: userData })
+      return response.data
+    } catch (error) {
+      throw error.response?.data || error
+    }
+  },
+
+  // Get user statistics (Admin only)
+  getUserStats: async () => {
+    try {
+      const response = await api.get('/users/stats')
+      return response.data
+    } catch (error) {
+      throw error.response?.data || error
+    }
+  }
 }
