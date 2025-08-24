@@ -486,7 +486,7 @@ export default function AdminProposalsPage() {
   }, [])
 
   return (
-    <div className="proposals-management-page space-y-6 p-6 bg-gray-50 min-h-screen">
+    <div className="proposals-management-page space-y-6 p-1 bg-gray-50 min-h-screen">
       {/* Page Header */}
       <div className="flex justify-between items-center">
         <div>
