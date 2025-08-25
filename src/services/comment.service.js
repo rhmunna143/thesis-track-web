@@ -12,23 +12,48 @@ export const commentService = {
   },
 
   // Get comments for a proposal
+  // NOTE: /proposals/{id}/comments endpoint returns 500 error
+  // Comments are included in the proposal details response instead
   getProposalComments: async (proposalId) => {
+    console.warn('Direct comments endpoint returns 500 error. Use proposal details instead.')
+    throw new Error('Comments are included in proposal details. Use proposalService.getProposal() instead.')
+    /*
     try {
-      const response = await api.get(`/comments/proposal/${proposalId}`)
+      // Updated to match Postman collection: /proposals/{id}/comments
+      const response = await api.get(`/proposals/${proposalId}/comments`)
       return response.data
     } catch (error) {
       throw error.response?.data || error
     }
+    */
   },
 
   // Get comments for a proposal (alternative method name)
   getCommentsByProposal: async (proposalId) => {
+    console.warn('Direct comments endpoint returns 500 error. Use proposal details instead.')
+    throw new Error('Comments are included in proposal details. Use proposalService.getProposal() instead.')
+    /*
     try {
-      const response = await api.get(`/comments/proposal/${proposalId}`)
+      // Updated to match Postman collection: /proposals/{id}/comments
+      const response = await api.get(`/proposals/${proposalId}/comments`)
       return response.data
     } catch (error) {
       throw error.response?.data || error
     }
+    */
+  },
+
+  // Alias for getProposalComments to maintain compatibility
+  getComments: async (proposalId) => {
+    console.warn('Direct comments endpoint returns 500 error. Use proposal details instead.')
+    throw new Error('Comments are included in proposal details. Use proposalService.getProposal() instead.')
+    /*
+    try {
+      return await commentService.getProposalComments(proposalId)
+    } catch (error) {
+      throw error
+    }
+    */
   },
 
   // Update comment (only by comment author)
