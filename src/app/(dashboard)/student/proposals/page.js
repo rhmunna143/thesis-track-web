@@ -50,6 +50,7 @@ import { proposalService } from '../../../../services/proposal.service'
 import { userService } from '../../../../services/user.service'
 import { uploadService } from '../../../../services/upload.service'
 import { commentService } from '../../../../services/comment.service'
+import { config } from '../../../../lib/config'
 import './student-proposals.css'
 
 const { Title, Text, Paragraph } = Typography
@@ -550,6 +551,19 @@ export default function StudentProposalsPage() {
       case 'REVISION_REQUIRED': return <ExclamationCircleOutlined />
       default: return <InfoCircleOutlined />
     }
+  }
+
+  // Helper function to get full document URL
+  const getFullDocumentUrl = (documentUrl) => {
+    if (!documentUrl) return null
+    
+    // If already a full URL, return as is
+    if (documentUrl.startsWith('http://') || documentUrl.startsWith('https://')) {
+      return documentUrl
+    }
+    
+    // If relative path, prepend backend base URL
+    return `${config.api.baseUrl}${documentUrl}`
   }
 
   // Table columns
@@ -1151,7 +1165,11 @@ export default function StudentProposalsPage() {
               key="download"
               type="primary"
               icon={<DownloadOutlined />}
-              onClick={() => window.open(selectedProposal.documentUrl, '_blank')}
+              onClick={() => {
+                const fullUrl = getFullDocumentUrl(selectedProposal.documentUrl)
+                console.log('Opening document URL:', fullUrl)
+                window.open(fullUrl, '_blank')
+              }}
             >
               Download Document
             </Button>
@@ -1179,6 +1197,19 @@ export default function StudentProposalsPage() {
               <Descriptions.Item label="Abstract">
                 {selectedProposal.abstract}
               </Descriptions.Item>
+              {selectedProposal.documentUrl && (
+                <Descriptions.Item label="Document">
+                  <div>
+                    <Text type="secondary" style={{ fontSize: '12px' }}>
+                      Stored path: {selectedProposal.documentUrl}
+                    </Text>
+                    <br />
+                    <Text type="secondary" style={{ fontSize: '12px' }}>
+                      Full URL: {getFullDocumentUrl(selectedProposal.documentUrl)}
+                    </Text>
+                  </div>
+                </Descriptions.Item>
+              )}
             </Descriptions>
             
             {selectedProposal.comments && selectedProposal.comments.length > 0 && (
