@@ -29,11 +29,11 @@ export default function DashboardLayout({ children }) {
   // }
 
   return (
-    <Layout className="min-h-screen">
+    <Layout className="min-h-screen flex">
       <Sidebar collapsed={collapsed} onCollapse={setCollapsed} />
       <Layout>
         <Header collapsed={collapsed} onCollapse={setCollapsed} />
-        <Content className="p-6 bg-gray-50">
+        <Content className="p-4 bg-gray-50">
           <div className="max-w-7xl mx-auto">{children}</div>
         </Content>
       </Layout>

@@ -35,11 +35,6 @@ const menuItems = {
       label: 'My Proposals',
     },
     {
-      key: '/student/proposals/new',
-      icon: <PlusOutlined />,
-      label: 'New Proposal',
-    },
-    {
       key: '/student/profile',
       icon: <UserOutlined />,
       label: 'Profile',

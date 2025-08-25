@@ -1,0 +1,281 @@
+/* User Management Page Styles */
+
+.user-management-page {
+  padding: 24px;
+  background: #f5f5f5;
+  min-height: 100vh;
+}
+
+.user-management-page .ant-table-wrapper {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.user-management-page .ant-card {
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.user-management-page .ant-statistic {
+  text-align: center;
+}
+
+.user-management-page .ant-statistic-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.user-management-page .user-avatar-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.user-management-page .user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-management-page .user-name {
+  font-weight: 500;
+  color: #262626;
+  margin-bottom: 2px;
+}
+
+.user-management-page .user-email {
+  font-size: 12px;
+  color: #8c8c8c;
+}
+
+.user-management-page .action-buttons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.user-management-page .ant-table-tbody > tr > td {
+  vertical-align: middle;
+}
+
+.user-management-page .filters-row {
+  margin-bottom: 16px;
+}
+
+.user-management-page .bulk-actions {
+  background: #f0f8ff;
+  border: 1px solid #d9f2ff;
+  border-radius: 6px;
+  padding: 12px;
+  margin-bottom: 16px;
+}
+
+.user-management-page .export-button {
+  background: #52c41a;
+  border-color: #52c41a;
+}
+
+.user-management-page .export-button:hover {
+  background: #73d13d;
+  border-color: #73d13d;
+}
+
+/* Quick filter buttons */
+.user-management-page .quick-filters {
+  background: #fafafa;
+  border: 1px solid #f0f0f0;
+  border-radius: 6px;
+  padding: 12px;
+  margin-bottom: 16px;
+}
+
+.user-management-page .quick-filters .ant-btn {
+  margin-right: 8px;
+  margin-bottom: 4px;
+  border-radius: 4px;
+}
+
+.user-management-page .quick-filters .ant-btn-primary {
+  background: #1890ff;
+  border-color: #1890ff;
+}
+
+/* Modal styles */
+.user-management-page .ant-modal-header {
+  border-bottom: 1px solid #f0f0f0;
+  margin-bottom: 24px;
+}
+
+.user-management-page .ant-modal-body {
+  padding: 24px;
+}
+
+.user-management-page .form-actions {
+  text-align: right;
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid #f0f0f0;
+}
+
+/* Upload styles */
+.user-management-page .ant-upload-drag {
+  background: #fafafa;
+  border: 2px dashed #d9d9d9;
+  border-radius: 6px;
+  transition: all 0.3s;
+}
+
+.user-management-page .ant-upload-drag:hover {
+  border-color: #1890ff;
+  background: #f0f8ff;
+}
+
+.user-management-page .upload-requirements {
+  background: #f6ffed;
+  border: 1px solid #b7eb8f;
+  border-radius: 6px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.user-management-page .upload-requirements h4 {
+  color: #389e0d;
+  margin-bottom: 8px;
+}
+
+.user-management-page .upload-requirements ul {
+  margin: 0;
+  padding-left: 16px;
+}
+
+.user-management-page .upload-requirements li {
+  color: #52c41a;
+}
+
+/* Statistics cards */
+.user-management-page .stats-card {
+  text-align: center;
+  border-radius: 8px;
+}
+
+.user-management-page .stats-card .ant-statistic-title {
+  color: #8c8c8c;
+  font-size: 14px;
+  font-weight: 400;
+  margin-bottom: 8px;
+}
+
+.user-management-page .stats-card .ant-statistic-content {
+  justify-content: center;
+}
+
+.user-management-page .stats-card .ant-statistic-content-value {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .user-management-page {
+    padding: 16px;
+  }
+  
+  .user-management-page .filters-row .ant-col {
+    margin-bottom: 12px;
+  }
+  
+  .user-management-page .ant-table-wrapper {
+    overflow-x: auto;
+  }
+
+  .user-management-page .quick-filters {
+    text-align: center;
+  }
+  
+  .user-management-page .action-buttons {
+    flex-direction: column;
+    gap: 4px;
+  }
+}
+
+/* Role tags */
+.user-management-page .ant-tag {
+  font-weight: 500;
+  border-radius: 4px;
+  padding: 2px 8px;
+}
+
+/* Status indicators */
+.user-management-page .status-active {
+  color: #52c41a;
+  background: #f6ffed;
+  border-color: #b7eb8f;
+}
+
+.user-management-page .status-inactive {
+  color: #ff4d4f;
+  background: #fff2f0;
+  border-color: #ffccc7;
+}
+
+/* Table enhancements */
+.user-management-page .ant-table-thead > tr > th {
+  background: #fafafa;
+  font-weight: 600;
+}
+
+.user-management-page .ant-table-tbody > tr:hover > td {
+  background: #f5f5f5;
+}
+
+/* Dropdown menu styles */
+.user-management-page .ant-dropdown-menu {
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.user-management-page .ant-dropdown-menu-item {
+  padding: 8px 16px;
+}
+
+.user-management-page .ant-dropdown-menu-item-danger {
+  color: #ff4d4f;
+}
+
+.user-management-page .ant-dropdown-menu-item-danger:hover {
+  background: #fff2f0;
+}
+
+/* Loading states */
+.user-management-page .ant-spin-container {
+  min-height: 400px;
+}
+
+/* Form improvements */
+.user-management-page .ant-form-item-label > label {
+  font-weight: 500;
+}
+
+.user-management-page .ant-input-password {
+  border-radius: 6px;
+}
+
+.user-management-page .ant-select {
+  border-radius: 6px;
+}
+
+/* Header actions */
+.user-management-page .page-header-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 576px) {
+  .user-management-page .page-header-actions {
+    justify-content: center;
+    width: 100%;
+  }
+}

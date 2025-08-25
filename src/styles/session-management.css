@@ -1,0 +1,371 @@
+/* Session Management Page Styles - Light Theme */
+
+.sessions-management-page {
+  background: #f8fafc !important;
+  min-height: 100vh;
+  color: #1f2937 !important;
+}
+
+.sessions-management-page * {
+  color: inherit;
+}
+
+.sessions-management-page .ant-table-wrapper {
+  background: white !important;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.sessions-management-page .ant-card {
+  background: white !important;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb !important;
+}
+
+.sessions-management-page .ant-table {
+  background: white !important;
+}
+
+.sessions-management-page .ant-table-thead > tr > th {
+  background: #f9fafb !important;
+  color: #374151 !important;
+  border-bottom: 1px solid #e5e7eb !important;
+}
+
+.sessions-management-page .ant-table-tbody > tr > td {
+  background: white !important;
+  color: #374151 !important;
+  border-bottom: 1px solid #f3f4f6 !important;
+}
+
+.sessions-management-page .ant-table-tbody > tr:hover > td {
+  background: #f9fafb !important;
+}
+
+.sessions-management-page .ant-statistic {
+  text-align: center;
+}
+
+.sessions-management-page .ant-statistic-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* Session status indicators */
+.sessions-management-page .status-active {
+  background: #f6ffed;
+  border-color: #b7eb8f;
+  color: #52c41a;
+}
+
+.sessions-management-page .status-inactive {
+  background: #fffbe6;
+  border-color: #ffe58f;
+  color: #fa8c16;
+}
+
+.sessions-management-page .status-archived {
+  background: #f5f5f5;
+  border-color: #d9d9d9;
+  color: #8c8c8c;
+}
+
+/* Active session banner */
+.sessions-management-page .active-session-banner {
+  background: linear-gradient(135deg, #e3f2fd 0%, #f1f8e9 100%);
+  border: 1px solid #2196f3;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 24px;
+}
+
+.sessions-management-page .active-session-banner .ant-badge-status-dot {
+  width: 8px;
+  height: 8px;
+}
+
+/* Table customizations */
+.sessions-management-page .ant-table-thead > tr > th {
+  background: #fafafa;
+  border-bottom: 2px solid #f0f0f0;
+  font-weight: 600;
+}
+
+.sessions-management-page .ant-table-tbody > tr:hover > td {
+  background: #f8faff;
+}
+
+/* Modal customizations */
+.sessions-management-page .ant-modal-header {
+  border-bottom: 1px solid #f0f0f0;
+  padding: 16px 24px;
+}
+
+.sessions-management-page .ant-modal-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #262626;
+}
+
+.sessions-management-page .ant-form-item-label > label {
+  font-weight: 500;
+  color: #262626;
+}
+
+/* Statistics cards */
+.sessions-management-page .ant-statistic-title {
+  color: #8c8c8c;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.sessions-management-page .ant-statistic-content-value {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+/* Action buttons */
+.sessions-management-page .action-buttons {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.sessions-management-page .action-buttons .ant-btn {
+  border: none;
+  box-shadow: none;
+}
+
+.sessions-management-page .action-buttons .ant-btn:hover {
+  background: #f0f0f0;
+}
+
+/* Page header */
+.sessions-management-page .page-header {
+  margin-bottom: 24px;
+}
+
+.sessions-management-page .page-header h2 {
+  margin: 0;
+  color: #262626;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.sessions-management-page .page-header p {
+  margin: 4px 0 0 0;
+  color: #8c8c8c;
+  font-size: 14px;
+}
+
+/* Quick filters */
+.sessions-management-page .quick-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+  align-items: center;
+}
+
+.sessions-management-page .quick-filters .filter-label {
+  font-weight: 500;
+  color: #595959;
+  margin-right: 8px;
+}
+
+.sessions-management-page .quick-filters .ant-btn-sm {
+  height: 28px;
+  padding: 0 12px;
+  font-size: 12px;
+  border-radius: 14px;
+}
+
+/* Session details grid */
+.sessions-management-page .session-details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.sessions-management-page .session-detail-item {
+  padding: 12px;
+  background: #fafafa;
+  border-radius: 6px;
+}
+
+.sessions-management-page .session-detail-label {
+  font-size: 12px;
+  color: #8c8c8c;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.sessions-management-page .session-detail-value {
+  font-size: 14px;
+  font-weight: 500;
+  color: #262626;
+}
+
+/* Clone session info box */
+.sessions-management-page .clone-info-box {
+  background: #e6f7ff;
+  border: 1px solid #91d5ff;
+  border-radius: 6px;
+  padding: 12px;
+  margin-bottom: 16px;
+}
+
+.sessions-management-page .clone-info-box .ant-typography {
+  margin: 0;
+  color: #1890ff;
+}
+
+/* Loading states */
+.sessions-management-page .loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+/* Empty states */
+.sessions-management-page .empty-state {
+  text-align: center;
+  padding: 40px;
+  color: #8c8c8c;
+}
+
+.sessions-management-page .empty-state .ant-empty-description {
+  color: #8c8c8c;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .sessions-management-page {
+    padding: 16px;
+  }
+  
+  .sessions-management-page .page-header {
+    text-align: center;
+  }
+  
+  .sessions-management-page .page-header h2 {
+    font-size: 24px;
+  }
+  
+  .sessions-management-page .ant-statistic {
+    margin-bottom: 16px;
+  }
+  
+  .sessions-management-page .action-buttons {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .sessions-management-page .quick-filters {
+    justify-content: center;
+  }
+  
+  .sessions-management-page .session-details-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 576px) {
+  .sessions-management-page .ant-table-wrapper {
+    font-size: 12px;
+  }
+  
+  .sessions-management-page .ant-btn {
+    padding: 4px 8px;
+    height: auto;
+  }
+  
+  .sessions-management-page .ant-modal {
+    margin: 16px;
+    max-width: calc(100vw - 32px);
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .sessions-management-page {
+    background: #141414;
+  }
+  
+  .sessions-management-page .ant-card {
+    background: #1f1f1f;
+    border-color: #303030;
+  }
+  
+  .sessions-management-page .page-header h2 {
+    color: #ffffff;
+  }
+  
+  .sessions-management-page .page-header p {
+    color: #a6a6a6;
+  }
+  
+  .sessions-management-page .session-detail-item {
+    background: #262626;
+  }
+  
+  .sessions-management-page .session-detail-value {
+    color: #ffffff;
+  }
+}
+
+/* Animation for status changes */
+.sessions-management-page .status-transition {
+  transition: all 0.3s ease;
+}
+
+.sessions-management-page .status-transition:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Badge customizations */
+.sessions-management-page .ant-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sessions-management-page .ant-badge-status-dot {
+  position: relative;
+  top: 0;
+}
+
+/* Form improvements */
+.sessions-management-page .ant-form-item-explain {
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.sessions-management-page .ant-switch {
+  background: #00000040;
+}
+
+.sessions-management-page .ant-switch-checked {
+  background: #52c41a;
+}
+
+/* Typography enhancements */
+.sessions-management-page .section-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #262626;
+  margin-bottom: 16px;
+}
+
+.sessions-management-page .section-subtitle {
+  font-size: 14px;
+  color: #8c8c8c;
+  margin-bottom: 8px;
+}

@@ -52,6 +52,11 @@ export const userService = {
     }
   },
 
+  // Alias for getAllUsers to maintain compatibility
+  getUsers: async (params = {}) => {
+    return await userService.getAllUsers(params)
+  },
+
   // Update user role (Admin only)
   updateUserRole: async (userId, role) => {
     try {
@@ -65,9 +70,35 @@ export const userService = {
   // Get teachers/supervisors list
   getTeachers: async () => {
     try {
+      console.log('Calling getTeachers via /users?role=TEACHER')
       const response = await api.get('/users?role=TEACHER&limit=100')
+      console.log('getTeachers response:', response.data)
       return response.data?.data || []
     } catch (error) {
+      console.error('Failed to get teachers via users endpoint:', error.response?.status, error.response?.data)
+      throw error.response?.data || error
+    }
+  },
+
+  // Get teachers from dedicated endpoint
+  getAllTeachers: async (params = {}) => {
+    try {
+      console.log('Calling getAllTeachers with params:', params)
+      const queryParams = new URLSearchParams()
+      
+      // Add filtering parameters as shown in Postman collection
+      if (params.department) queryParams.append('department', params.department)
+      if (params.search) queryParams.append('search', params.search)
+
+      const queryString = queryParams.toString()
+      const url = queryString ? `/teachers?${queryString}` : '/teachers'
+      
+      console.log(`Calling GET ${url}`)
+      const response = await api.get(url)
+      console.log(`GET ${url} response:`, response.data)
+      return response.data
+    } catch (error) {
+      console.error('Failed to get teachers:', error.response?.status, error.response?.data)
       throw error.response?.data || error
     }
   },
@@ -105,4 +136,74 @@ export const userService = {
       throw error.response?.data || error
     }
   },
+
+  // Update user profile by ID (Admin only)
+  updateUserProfile: async (userId, profileData) => {
+    try {
+      const response = await api.put(`/users/${userId}`, profileData)
+      return response.data
+    } catch (error) {
+      throw error.response?.data || error
+    }
+  },
+
+  // Delete user (Admin only)
+  deleteUser: async (userId) => {
+    try {
+      const response = await api.delete(`/users/${userId}`)
+      return response.data
+    } catch (error) {
+      throw error.response?.data || error
+    }
+  },
+
+  // Create new user (Admin only)
+  createUser: async (userData) => {
+    try {
+      const response = await api.post('/users', userData)
+      return response.data
+    } catch (error) {
+      throw error.response?.data || error
+    }
+  },
+
+  // Reset user password (Admin only)
+  resetUserPassword: async (userId, newPassword) => {
+    try {
+      const response = await api.patch(`/users/${userId}/password`, { password: newPassword })
+      return response.data
+    } catch (error) {
+      throw error.response?.data || error
+    }
+  },
+
+  // Toggle user status (Admin only)
+  toggleUserStatus: async (userId, isActive) => {
+    try {
+      const response = await api.patch(`/users/${userId}/status`, { isActive })
+      return response.data
+    } catch (error) {
+      throw error.response?.data || error
+    }
+  },
+
+  // Bulk import users (Admin only)
+  bulkImportUsers: async (userData) => {
+    try {
+      const response = await api.post('/users/bulk-import', { users: userData })
+      return response.data
+    } catch (error) {
+      throw error.response?.data || error
+    }
+  },
+
+  // Get user statistics (Admin only)
+  getUserStats: async () => {
+    try {
+      const response = await api.get('/users/stats')
+      return response.data
+    } catch (error) {
+      throw error.response?.data || error
+    }
+  }
 }

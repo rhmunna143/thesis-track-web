@@ -53,20 +53,15 @@ export default function AdminDashboard() {
   const fetchDashboardData = async () => {
     // Fetch dashboard statistics with individual error handling
     try {
-      const dashboardStats = await analyticsService.getDashboardData()
-      setDashboardData({
-        totalUsers: dashboardStats.totalUsers || 0,
-        totalProposals: dashboardStats.totalProposals || 0,
-        totalTeachers: dashboardStats.totalTeachers || 0,
-        activeSessions: dashboardStats.activeSessions || 0
-      })
+      const stats = await analyticsService.getDashboardData()
+      setDashboardData(stats)
     } catch (error) {
-      console.warn('Dashboard stats not available, using fallback:', error.message)
+      console.error('Failed to fetch dashboard stats:', error)
       setDashboardData({
-        totalUsers: 1250,
-        totalProposals: 156,
-        totalTeachers: 48,
-        activeSessions: 3
+        totalUsers: 0,
+        totalProposals: 0,
+        totalTeachers: 0,
+        activeSessions: 0
       })
     }
 
@@ -105,36 +100,12 @@ export default function AdminDashboard() {
       
       setProposalAnalytics({ monthlyData, statusData, trendData, departmentData })
     } catch (error) {
-      console.warn('Proposal analytics not available, using fallback:', error.message)
-      const fallbackMonthlyData = [
-        { month: 'Jan', proposals: 65 },
-        { month: 'Feb', proposals: 59 },
-        { month: 'Mar', proposals: 80 },
-        { month: 'Apr', proposals: 81 },
-        { month: 'May', proposals: 56 },
-        { month: 'Jun', proposals: 75 }
-      ]
-      
+      console.error('Failed to fetch proposal analytics:', error)
       setProposalAnalytics({
-        monthlyData: fallbackMonthlyData,
-        statusData: [
-          { name: 'Approved', value: 45, color: '#52c41a' },
-          { name: 'Pending', value: 35, color: '#1890ff' },
-          { name: 'Under Review', value: 25, color: '#faad14' },
-          { name: 'Rejected', value: 15, color: '#ff4d4f' }
-        ],
-        trendData: fallbackMonthlyData.map((item, index) => ({
-          ...item,
-          growth: index > 0 ? ((item.proposals - fallbackMonthlyData[index - 1].proposals) / fallbackMonthlyData[index - 1].proposals * 100).toFixed(1) : 0,
-          cumulative: fallbackMonthlyData.slice(0, index + 1).reduce((sum, data) => sum + data.proposals, 0)
-        })),
-        departmentData: [
-          { department: 'Computer Science', proposals: 45, color: '#1890ff' },
-          { department: 'Electrical Engineering', proposals: 32, color: '#52c41a' },
-          { department: 'Mechanical Engineering', proposals: 28, color: '#faad14' },
-          { department: 'Civil Engineering', proposals: 22, color: '#f5222d' },
-          { department: 'Chemical Engineering', proposals: 18, color: '#722ed1' }
-        ]
+        monthlyData: [],
+        statusData: [],
+        trendData: [],
+        departmentData: []
       })
     }
 
