@@ -1051,16 +1051,6 @@ export default function StudentProposalsPage() {
                 style={{ marginBottom: 16 }}
               />
               
-              {/* Debug information - remove in production */}
-              {process.env.NODE_ENV === 'development' && (
-                <Alert
-                  message="Debug Info"
-                  description={`Form Values: ${JSON.stringify(newProposalForm.getFieldsValue(true), null, 2)}`}
-                  type="info"
-                  style={{ marginBottom: 16, whiteSpace: 'pre-wrap' }}
-                />
-              )}
-              
               <Descriptions column={1} bordered>
                 <Descriptions.Item label="Title">
                   {newProposalForm.getFieldValue('title') || 'Not provided'}
@@ -1197,19 +1187,6 @@ export default function StudentProposalsPage() {
               <Descriptions.Item label="Abstract">
                 {selectedProposal.abstract}
               </Descriptions.Item>
-              {selectedProposal.documentUrl && (
-                <Descriptions.Item label="Document">
-                  <div>
-                    <Text type="secondary" style={{ fontSize: '12px' }}>
-                      Stored path: {selectedProposal.documentUrl}
-                    </Text>
-                    <br />
-                    <Text type="secondary" style={{ fontSize: '12px' }}>
-                      Full URL: {getFullDocumentUrl(selectedProposal.documentUrl)}
-                    </Text>
-                  </div>
-                </Descriptions.Item>
-              )}
             </Descriptions>
             
             {selectedProposal.comments && selectedProposal.comments.length > 0 && (
