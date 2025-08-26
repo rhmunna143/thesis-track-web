@@ -1,9 +1,9 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import Link from 'next/link'
-import { usePathname, useRouter } from 'next/navigation'
-import { Layout, Menu, Button, Avatar, Dropdown } from 'antd'
+import { useState } from "react";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { Layout, Menu, Button, Avatar, Dropdown } from "antd";
 import {
   DashboardOutlined,
   FileTextOutlined,
@@ -17,116 +17,122 @@ import {
   BookOutlined,
   BarChartOutlined,
   DatabaseOutlined,
-} from '@ant-design/icons'
-import useAuthStore from '../../store/authStore'
+} from "@ant-design/icons";
+import useAuthStore from "../../store/authStore";
+import { BookAIcon } from "lucide-react";
 
-const { Sider } = Layout
+const { Sider } = Layout;
 
 const menuItems = {
   STUDENT: [
     {
-      key: '/student',
+      key: "/student",
       icon: <DashboardOutlined />,
-      label: 'Dashboard',
+      label: "Dashboard",
     },
     {
-      key: '/student/proposals',
+      key: "/student/proposals",
       icon: <FileTextOutlined />,
-      label: 'My Proposals',
+      label: "My Proposals",
     },
     {
-      key: '/student/profile',
+      key: "/student/books",
+      icon: <BookOutlined />,
+      label: "My Project Books",
+    },
+    {
+      key: "/student/profile",
       icon: <UserOutlined />,
-      label: 'Profile',
+      label: "Profile",
     },
   ],
   TEACHER: [
     {
-      key: '/teacher',
+      key: "/teacher",
       icon: <DashboardOutlined />,
-      label: 'Dashboard',
+      label: "Dashboard",
     },
     {
-      key: '/teacher/proposals',
+      key: "/teacher/proposals",
       icon: <FileTextOutlined />,
-      label: 'Review Proposals',
+      label: "Review Proposals",
     },
     {
-      key: '/teacher/students',
+      key: "/teacher/students",
       icon: <TeamOutlined />,
-      label: 'My Students',
+      label: "My Students",
     },
     {
-      key: '/teacher/analytics',
+      key: "/teacher/analytics",
       icon: <BarChartOutlined />,
-      label: 'Analytics',
+      label: "Analytics",
     },
     {
-      key: '/teacher/profile',
+      key: "/teacher/profile",
       icon: <UserOutlined />,
-      label: 'Profile',
+      label: "Profile",
     },
   ],
   ADMIN: [
     {
-      key: '/admin',
+      key: "/admin",
       icon: <DashboardOutlined />,
-      label: 'Dashboard',
+      label: "Dashboard",
     },
     {
-      key: '/admin/users',
+      key: "/admin/users",
       icon: <TeamOutlined />,
-      label: 'User Management',
+      label: "User Management",
     },
     {
-      key: '/admin/sessions',
+      key: "/admin/sessions",
       icon: <DatabaseOutlined />,
-      label: 'Sessions',
+      label: "Sessions",
     },
     {
-      key: '/admin/proposals',
+      key: "/admin/proposals",
       icon: <FileTextOutlined />,
-      label: 'All Proposals',
+      label: "All Proposals",
     },
     {
-      key: '/admin/analytics',
+      key: "/admin/analytics",
       icon: <BarChartOutlined />,
-      label: 'System Analytics',
+      label: "System Analytics",
     },
     {
-      key: '/admin/settings',
+      key: "/admin/settings",
       icon: <SettingOutlined />,
-      label: 'Settings',
+      label: "Settings",
     },
   ],
-}
+};
 
 export default function Sidebar({ collapsed, onCollapse }) {
-  const pathname = usePathname()
-  const router = useRouter()
-  const { user, logout } = useAuthStore()
+  const pathname = usePathname();
+  const router = useRouter();
+  const { user, logout } = useAuthStore();
 
   const handleLogout = () => {
-    logout()
-    router.push('/login')
-  }
+    logout();
+    router.push("/login");
+  };
 
   const userMenuItems = [
     {
-      key: 'profile',
+      key: "profile",
       icon: <UserOutlined />,
-      label: 'Profile',
+      label: "Profile",
       onClick: () => router.push(`/${user?.role?.toLowerCase()}/profile`),
     },
     {
-      key: 'logout',
+      key: "logout",
       icon: <LogoutOutlined />,
-      label: 'Logout',
+      label: "Logout",
       onClick: handleLogout,
     },
-  ]
+  ];
 
-  const currentMenuItems = menuItems[user?.role] || []
+  const currentMenuItems = menuItems[user?.role] || [];
 
   return (
     <Sider
@@ -160,7 +166,7 @@ export default function Sidebar({ collapsed, onCollapse }) {
         mode="inline"
         selectedKeys={[pathname]}
         className="border-r-0"
-        items={currentMenuItems.map(item => ({
+        items={currentMenuItems.map((item) => ({
           ...item,
           onClick: () => router.push(item.key),
         }))}
@@ -172,11 +178,12 @@ export default function Sidebar({ collapsed, onCollapse }) {
             <Avatar size={32} icon={<UserOutlined />} />
             <div className="flex-1 min-w-0">
               <div className="font-medium text-sm truncate">{user?.name}</div>
-              <div className="text-xs text-gray-500 capitalize">{user?.role?.toLowerCase()}</div>
+              <div className="text-xs text-gray-500 capitalize">
+                {user?.role?.toLowerCase()}
+              </div>
             </div>
 
             <Dropdown
-            
               menu={{ items: userMenuItems }}
               placement="topRight"
               arrow
@@ -193,11 +200,15 @@ export default function Sidebar({ collapsed, onCollapse }) {
               arrow
               overlayClassName="z-50"
             >
-              <Avatar size={32} icon={<UserOutlined />} className="cursor-pointer" />
+              <Avatar
+                size={32}
+                icon={<UserOutlined />}
+                className="cursor-pointer"
+              />
             </Dropdown>
           </div>
         )}
       </div>
     </Sider>
-  )
+  );
 }
