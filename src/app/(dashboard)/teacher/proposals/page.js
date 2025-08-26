@@ -167,45 +167,37 @@ export default function TeacherProposalsPage() {
   // Fetch comments for a proposal
   const fetchComments = async (proposalId) => {
     try {
-      // Try to get comments from the direct comments endpoint first
+      // First try using the comment service
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/proposals/${proposalId}/comments`, {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          }
-        })
-        
-        if (response.ok) {
-          const data = await response.json()
-          if (data && data.success && data.data) {
-            setComments(data.data)
-            return
-          } else if (Array.isArray(data)) {
-            setComments(data)
-            return
-          }
+        const response = await commentService.getProposalComments(proposalId)
+        if (response && response.success && response.data) {
+          setComments(response.data)
+          return
+        } else if (Array.isArray(response)) {
+          setComments(response)
+          return
         }
-      } catch (directError) {
-        console.log('Direct comments API failed, trying proposal details...')
+      } catch (serviceError) {
+        console.log('Comment service failed, trying proposal details...')
       }
 
-      // Fallback: Get comments from proposal details
+      // Fallback: Get comments from proposal details (which should include author info)
       const response = await proposalService.getProposal(proposalId)
+      
       if (response && response.success && response.data) {
         if (response.data.comments && Array.isArray(response.data.comments)) {
           setComments(response.data.comments)
-        } else {
-          setComments([])
+          return
         }
       } else if (response && response.comments) {
         setComments(response.comments)
-      } else {
-        setComments([])
+        return
       }
+      
+      // If all else fails, set empty comments
+      setComments([])
     } catch (error) {
       console.error('Failed to fetch comments:', error)
-      // Don't show error message for comments as it's not critical
       setComments([])
     }
   }
@@ -219,21 +211,10 @@ export default function TeacherProposalsPage() {
       // If there are comments, add them separately
       if (reviewComments && reviewComments.trim()) {
         try {
-          const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/comments`, {
-            method: 'POST',
-            headers: {
-              'Authorization': `Bearer ${token}`,
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              proposalId: parseInt(proposalId),
-              content: reviewComments
-            })
+          await commentService.addComment({
+            proposalId: parseInt(proposalId),
+            content: reviewComments
           })
-          
-          if (!response.ok) {
-            throw new Error('Failed to add review comments')
-          }
         } catch (commentError) {
           console.error('Failed to add review comments:', commentError)
           // Don't fail the whole operation if comments fail
@@ -254,22 +235,11 @@ export default function TeacherProposalsPage() {
   // Add comment to proposal
   const addComment = async (values) => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/comments`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          proposalId: parseInt(selectedProposal.id),
-          content: values.comment
-        })
+      // Use the comment service for proper API handling
+      await commentService.addComment({
+        proposalId: parseInt(selectedProposal.id),
+        content: values.comment
       })
-      
-      if (!response.ok) {
-        const errorData = await response.json()
-        throw new Error(errorData.message || 'Failed to add comment')
-      }
       
       message.success('Comment added successfully')
       setAddCommentModalVisible(false)
@@ -286,7 +256,41 @@ export default function TeacherProposalsPage() {
       }
     } catch (error) {
       console.error('Failed to add comment:', error)
-      message.error(error.message || 'Failed to add comment')
+      
+      // Fallback to direct API call if service fails
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/comments`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            proposalId: parseInt(selectedProposal.id),
+            content: values.comment
+          })
+        })
+        
+        if (!response.ok) {
+          const errorData = await response.json()
+          throw new Error(errorData.message || 'Failed to add comment')
+        }
+        
+        message.success('Comment added successfully')
+        setAddCommentModalVisible(false)
+        commentForm.resetFields()
+        
+        // Refresh comments
+        if (commentsModalVisible) {
+          fetchComments(selectedProposal.id)
+        }
+        if (drawerVisible) {
+          fetchComments(selectedProposal.id)
+        }
+      } catch (fallbackError) {
+        console.error('Fallback comment addition also failed:', fallbackError)
+        message.error(fallbackError.message || 'Failed to add comment')
+      }
     }
   }
 
@@ -746,11 +750,19 @@ export default function TeacherProposalsPage() {
                 </Button>
               </div>
               {comments.slice(0, 3).map((comment, index) => (
-                <div key={index} className="border-l-4 border-blue-200 pl-4 mb-3">
+                <div key={comment.id || index} className="border-l-4 border-blue-200 pl-4 mb-3">
                   <div className="flex justify-between items-start">
-                    <Text strong>{comment.author?.name || 'Unknown'}</Text>
+                    <Text strong>
+                      {comment.commenter?.name || 
+                       comment.author?.name || 
+                       comment.authorName || 
+                       comment.user?.name ||
+                       comment.User?.name ||
+                       (comment.commenterId === user?.id ? user?.name : null) ||
+                       'Anonymous'}
+                    </Text>
                     <Text type="secondary" className="text-xs">
-                      {formatDate(comment.createdAt)}
+                      {formatDate(comment.createdAt || comment.created_at || comment.updatedAt)}
                     </Text>
                   </div>
                   <Paragraph className="mt-1 mb-0">{comment.content}</Paragraph>
@@ -878,21 +890,42 @@ export default function TeacherProposalsPage() {
         width={600}
       >
         <div className="space-y-4">
-          {comments.map((comment, index) => (
-            <div key={index} className="border-b pb-3">
-              <div className="flex justify-between items-start mb-2">
-                <div className="flex items-center space-x-2">
-                  <Avatar size="small" icon={<UserOutlined />} />
-                  <Text strong>{comment.author?.name || 'Unknown'}</Text>
-                  <Tag size="small">{comment.author?.role || 'User'}</Tag>
+          {comments.map((comment, index) => {
+            // Debug log for each comment in modal
+            console.log('Modal comment structure:', comment)
+            
+            return (
+              <div key={comment.id || index} className="border-b pb-3">
+                <div className="flex justify-between items-start mb-2">
+                  <div className="flex items-center space-x-2">
+                    <Avatar size="small" icon={<UserOutlined />} />
+                    <Text strong>
+                      {comment.commenter?.name || 
+                       comment.author?.name || 
+                       comment.authorName || 
+                       comment.user?.name ||
+                       comment.User?.name ||
+                       (comment.commenterId === user?.id ? user?.name : null) ||
+                       'Anonymous'}
+                    </Text>
+                    <Tag size="small">
+                      {comment.commenter?.role || 
+                       comment.author?.role || 
+                       comment.authorRole || 
+                       comment.user?.role ||
+                       comment.User?.role ||
+                       (comment.commenterId === user?.id ? user?.role : null) ||
+                       'User'}
+                    </Tag>
+                  </div>
+                  <Text type="secondary" className="text-xs">
+                    {formatDate(comment.createdAt || comment.created_at || comment.updatedAt)}
+                  </Text>
                 </div>
-                <Text type="secondary" className="text-xs">
-                  {formatDate(comment.createdAt)}
-                </Text>
+                <Paragraph className="ml-6">{comment.content}</Paragraph>
               </div>
-              <Paragraph className="ml-6">{comment.content}</Paragraph>
-            </div>
-          ))}
+            )
+          })}
           {comments.length === 0 && (
             <Empty description="No comments yet" />
           )}
