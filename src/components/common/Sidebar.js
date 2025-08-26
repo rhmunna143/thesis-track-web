@@ -58,6 +58,11 @@ const menuItems = {
       label: "Review Proposals",
     },
     {
+      key: "/teacher/books",
+      icon: <BookOutlined />,
+      label: "Review Project Books",
+    },
+    {
       key: "/teacher/students",
       icon: <TeamOutlined />,
       label: "My Students",
