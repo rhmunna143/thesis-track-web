@@ -52,6 +52,7 @@ import {
 import { proposalService } from '../../../../services/proposal.service'
 import { commentService } from '../../../../services/comment.service'
 import { userService } from '../../../../services/user.service'
+import { config } from '../../../../lib/config'
 import useAuthStore from '../../../../store/authStore'
 import useErrorHandler from '../../../../hooks/useErrorHandler'
 import '../../../../styles/proposals-management.css'
@@ -100,21 +101,44 @@ export default function AdminProposalsPage() {
   const [assignForm] = Form.useForm()
   const [commentForm] = Form.useForm()
 
+  // Transform proposal data from backend format to frontend format
+  const transformProposalData = (proposalData) => {
+    if (!proposalData) return proposalData
+
+    return {
+      ...proposalData,
+      // Map nested student and supervisor data to flat fields for easier access
+      studentName: proposalData.student?.name || proposalData.studentName,
+      studentId: proposalData.studentId || proposalData.student?.id,
+      supervisorName: proposalData.supervisor?.name || proposalData.supervisorName,
+      supervisorId: proposalData.supervisorId || proposalData.supervisor?.id,
+      // Keep the nested objects for detailed views
+      student: proposalData.student,
+      supervisor: proposalData.supervisor,
+      // Ensure date fields are properly formatted
+      createdAt: proposalData.createdAt || proposalData.created_at,
+      updatedAt: proposalData.updatedAt || proposalData.updated_at
+    }
+  }
+
   // Fetch proposals
   const fetchProposals = async () => {
     setLoading(true)
     try {
       const response = await proposalService.getAllProposals()
-      setProposals(response.data || response || [])
+      const rawData = response.data || response || []
+      const transformedProposals = Array.isArray(rawData) 
+        ? rawData.map(transformProposalData) 
+        : []
+      setProposals(transformedProposals)
       
       // Calculate stats
-      const data = response.data || response || []
       setStats({
-        totalProposals: data.length,
-        pendingProposals: data.filter(p => p.status === 'PENDING').length,
-        approvedProposals: data.filter(p => p.status === 'APPROVED').length,
-        rejectedProposals: data.filter(p => p.status === 'REJECTED').length,
-        revisionRequiredProposals: data.filter(p => p.status === 'REVISION_REQUIRED').length
+        totalProposals: transformedProposals.length,
+        pendingProposals: transformedProposals.filter(p => p.status === 'PENDING').length,
+        approvedProposals: transformedProposals.filter(p => p.status === 'APPROVED').length,
+        rejectedProposals: transformedProposals.filter(p => p.status === 'REJECTED').length,
+        revisionRequiredProposals: transformedProposals.filter(p => p.status === 'REVISION_REQUIRED').length
       })
       
     } catch (error) {
@@ -660,7 +684,10 @@ export default function AdminProposalsPage() {
             icon={<DownloadOutlined />}
             onClick={() => {
               if (selectedProposal?.documentUrl) {
-                window.open(selectedProposal.documentUrl, '_blank')
+                const fullUrl = selectedProposal.documentUrl.startsWith('http') 
+                  ? selectedProposal.documentUrl 
+                  : `${config.api.baseUrl}${selectedProposal.documentUrl}`
+                window.open(fullUrl, '_blank')
               } else {
                 message.warning('No document available for download')
               }
@@ -723,7 +750,14 @@ export default function AdminProposalsPage() {
 
       {/* Assign Supervisor Modal */}
       <Modal
-        title="Assign Supervisor"
+        title={
+          <div>
+            <div className="text-lg font-medium">Assign Supervisor</div>
+            <div className="text-sm text-gray-500 mt-1">
+              {selectedProposal?.title && `For proposal: "${selectedProposal.title}"`}
+            </div>
+          </div>
+        }
         open={assignModalVisible}
         onCancel={() => {
           setAssignModalVisible(false)
@@ -731,7 +765,7 @@ export default function AdminProposalsPage() {
           setSelectedProposal(null)
         }}
         footer={null}
-        width={500}
+        width={600}
       >
         <Form
           form={assignForm}
@@ -751,16 +785,35 @@ export default function AdminProposalsPage() {
               showSearch
               optionFilterProp="children"
               size="large"
+              dropdownStyle={{ 
+                minWidth: '400px',
+                maxHeight: '300px'
+              }}
+              optionLabelProp="label"
+              filterOption={(input, option) =>
+                option.label.toLowerCase().includes(input.toLowerCase()) ||
+                (teachers.find(t => t.id === option.value)?.department || '').toLowerCase().includes(input.toLowerCase())
+              }
             >
               {teachers.map(teacher => (
-                <Option key={teacher.id} value={teacher.id}>
-                  <div className="flex items-center gap-2">
-                    <Avatar icon={<UserOutlined />} size="small" />
-                    <div>
-                      <div>{teacher.name}</div>
-                      <Text type="secondary" className="text-xs">
-                        {teacher.department || 'No department'}
-                      </Text>
+                <Option 
+                  key={teacher.id} 
+                  value={teacher.id}
+                  label={teacher.name}
+                  style={{ height: 'auto', minHeight: '60px' }}
+                >
+                  <div className="flex items-center gap-3 py-3">
+                    <Avatar icon={<UserOutlined />} size="default" />
+                    <div className="flex-1 min-w-0">
+                      <div className="font-medium text-gray-900 truncate">{teacher.name}</div>
+                      <div className="text-sm text-gray-500 truncate">
+                        {teacher.department || 'No department specified'}
+                      </div>
+                      {teacher.email && (
+                        <div className="text-xs text-gray-400 truncate">
+                          {teacher.email}
+                        </div>
+                      )}
                     </div>
                   </div>
                 </Option>
