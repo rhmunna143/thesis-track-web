@@ -27,7 +27,7 @@ export const config = {
   // Application URLs
   app: {
     url: process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000',
-    name: 'ThesisTrack',
+    name: 'Appro',
     description: 'Project Proposal & Review System',
   },
 
@@ -39,7 +39,7 @@ export const config = {
       user: process.env.SMTP_USER,
       password: process.env.SMTP_PASS,
     },
-    from: process.env.EMAIL_FROM || 'noreply@thesistrack.com',
+    from: process.env.EMAIL_FROM || 'noreply@Appro.com',
   },
 
   // Database Configuration (for future backend)

@@ -1,7 +1,7 @@
 # Academic Sessions Management
 
 ## Overview
-The Academic Sessions Management page provides comprehensive functionality for managing academic sessions in the ThesisTrack system. This is designed for administrators to create, manage, and monitor academic periods (semesters/terms) during which students can submit proposals.
+The Academic Sessions Management page provides comprehensive functionality for managing academic sessions in the Appro system. This is designed for administrators to create, manage, and monitor academic periods (semesters/terms) during which students can submit proposals.
 
 ## Features
 

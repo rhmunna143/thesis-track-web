@@ -1,7 +1,7 @@
 {
   "info": {
-    "name": "ThesisTrack API Collection",
-    "description": "Complete API collection for ThesisTrack - Academic Project Proposal & Book Review System",
+    "name": "Appro API Collection",
+    "description": "Complete API collection for Appro - Academic Project Proposal & Book Review System",
     "version": "1.0.0",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },

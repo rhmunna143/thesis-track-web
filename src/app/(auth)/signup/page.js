@@ -59,7 +59,7 @@ export default function SignupPage() {
             <h1 className="text-2xl font-semibold text-white mb-2 tracking-wider">
               CREATE ACCOUNT
             </h1>
-            <p className="text-gray-300 text-sm">Join ThesisTrack to manage your proposals</p>
+            <p className="text-gray-300 text-sm">Join Appro to manage your proposals</p>
           </div>
 
           {/* Error Alert */}

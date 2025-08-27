@@ -20,6 +20,7 @@ import {
 } from "@ant-design/icons";
 import useAuthStore from "../../store/authStore";
 import { BookAIcon } from "lucide-react";
+import Image from "next/image";
 
 const { Sider } = Layout;
 
@@ -157,16 +158,26 @@ export default function Sidebar({ collapsed, onCollapse }) {
         <div className="flex items-center gap-3">
           {!collapsed && (
             <>
-              <div className="w-8 h-11 bg-primary rounded-lg flex items-center justify-center">
-                <BookOutlined className="text-white" />
+              <div className="w-20 h-11 rounded-lg flex items-center">
+                <Image
+                  src="/images/cap.png"
+                  alt="Appro Logo"
+                  width={80}
+                  height={80}
+                />
               </div>
-              <span className="font-bold text-lg">ThesisTrack</span>
+              <span className="font-bold text-lg">Appro</span>
             </>
           )}
 
           {collapsed && (
-            <div className="w-8 h-11 bg-primary rounded-lg flex items-center justify-center mx-auto">
-              <BookOutlined className="text-white" />
+            <div className="w-20 h-11 rounded-lg flex items-center mx-auto">
+              <Image
+                src="/images/cap.png"
+                alt="Appro Logo"
+                width={80}
+                height={80}
+              />
             </div>
           )}
         </div>

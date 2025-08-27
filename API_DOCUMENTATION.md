@@ -1,4 +1,4 @@
-# ThesisTrack API Documentation
+# Appro API Documentation
 
 ## Base URL
 - **Development**: `http://localhost:5000`

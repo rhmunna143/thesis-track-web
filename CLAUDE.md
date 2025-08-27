@@ -1,7 +1,7 @@
-# ThesisTrack Project Memory
+# Appro Project Memory
 
 ## Project Overview
-ThesisTrack is a centralized web application for managing thesis/project proposal submissions and reviews in academic institutions. Built with Next.js 14, Tailwind CSS, and Ant Design.
+Appro is a centralized web application for managing thesis/project proposal submissions and reviews in academic institutions. Built with Next.js 14, Tailwind CSS, and Ant Design.
 
 ## Tech Stack
 - **Frontend**: Next.js 14 (JavaScript, not TypeScript)
