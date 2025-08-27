@@ -78,6 +78,41 @@ const TeacherProjectBooksPage = () => {
   const [reviewForm] = Form.useForm();
   const { user } = useAuthStore();
 
+  // Transform backend data to frontend format
+  const transformProjectBookData = (backendData) => {
+    return {
+      id: backendData.id,
+      title: backendData.proposal_title,
+      status: backendData.status,
+      createdAt: backendData.submitted_at || backendData.created_at,
+      updatedAt: backendData.updated_at,
+      reviewScore: backendData.review_score,
+      reviewComments: backendData.review_comments,
+      documentUrl: backendData.document_url,
+      presentationUrl: backendData.presentation_url,
+      sourceCodeUrl: backendData.source_code_url,
+      reviewedAt: backendData.reviewed_at,
+      student: {
+        id: backendData.proposal_id, // Using proposal_id as student identifier
+        name: backendData.student_name,
+        studentId: backendData.student_email?.split('@')[0] || 'N/A', // Extract from email
+        department: 'Computer Science', // Default since not provided
+        email: backendData.student_email
+      },
+      proposal: {
+        id: backendData.proposal_id,
+        title: backendData.proposal_title,
+        abstract: backendData.abstract
+      },
+      supervisor: {
+        name: backendData.supervisor_name
+      },
+      reviewer: {
+        name: backendData.reviewer_name
+      }
+    };
+  };
+
   // Fetch project books
   const fetchProjectBooks = async () => {
     setLoading(true);
@@ -86,21 +121,50 @@ const TeacherProjectBooksPage = () => {
         page: pagination.current,
         limit: pagination.pageSize,
         ...(filters.status !== 'all' && { status: filters.status }),
-        ...(filters.search && { search: filters.search })
+        ...(filters.search && { search: filters.search }),
+        // Add teacher's ID for filtering if they are a teacher
+        ...(user?.role === 'TEACHER' && { supervisorId: user.id })
       };
 
+      console.log('Fetching project books with params:', params);
       const response = await projectBookService.getProjectBooks(params);
+      console.log('Project books response:', response);
       
-      if (response.projectBooks) {
-        setProjectBooks(response.projectBooks);
+      if (response && response.projectBooks) {
+        // Transform data to match frontend expectations
+        const transformedData = response.projectBooks.map(book => transformProjectBookData(book));
+        setProjectBooks(transformedData);
         setPagination(prev => ({
           ...prev,
           total: response.total || response.projectBooks.length
         }));
+      } else if (response && Array.isArray(response)) {
+        // Handle case where response is directly an array - transform each item
+        const transformedData = response.map(book => transformProjectBookData(book));
+        setProjectBooks(transformedData);
+        setPagination(prev => ({
+          ...prev,
+          total: response.length
+        }));
+      } else {
+        // If no data structure matches, set empty array
+        console.warn('Unexpected response structure:', response);
+        setProjectBooks([]);
+        setPagination(prev => ({
+          ...prev,
+          total: 0
+        }));
       }
     } catch (error) {
       console.error('Failed to fetch project books:', error);
-      message.error('Failed to fetch project books');
+      message.error(`Failed to fetch project books: ${error.message || 'Unknown error'}`);
+      
+      // Set empty state on error
+      setProjectBooks([]);
+      setPagination(prev => ({
+        ...prev,
+        total: 0
+      }));
     } finally {
       setLoading(false);
     }
@@ -113,15 +177,17 @@ const TeacherProjectBooksPage = () => {
       setStats(response);
     } catch (error) {
       console.error('Failed to fetch stats:', error);
-      // Set default stats if API fails
-      const calculatedStats = {
-        total: projectBooks.length,
-        pending: projectBooks.filter(book => book.status === 'PENDING').length,
-        approved: projectBooks.filter(book => book.status === 'APPROVED').length,
-        rejected: projectBooks.filter(book => book.status === 'REJECTED').length,
-        underReview: projectBooks.filter(book => book.status === 'UNDER_REVIEW').length
-      };
-      setStats(calculatedStats);
+      // Calculate stats from current project books data
+      if (projectBooks.length > 0) {
+        const calculatedStats = {
+          total: projectBooks.length,
+          pending: projectBooks.filter(book => book.status === 'PENDING').length,
+          approved: projectBooks.filter(book => book.status === 'APPROVED').length,
+          rejected: projectBooks.filter(book => book.status === 'REJECTED').length,
+          underReview: projectBooks.filter(book => book.status === 'UNDER_REVIEW').length
+        };
+        setStats(calculatedStats);
+      }
     }
   };
 
