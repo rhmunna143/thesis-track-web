@@ -132,6 +132,26 @@ export default function StudentProjectBooksPage() {
   // Error state
   const [error, setError] = useState(null)
 
+  // Transform project book data from backend format to frontend format
+  const transformProjectBookData = (bookData) => {
+    if (!bookData) return bookData
+
+    return {
+      ...bookData,
+      proposal: {
+        id: bookData.proposal_id,
+        title: bookData.proposal_title || bookData.title,
+        supervisor: {
+          name: bookData.supervisor_name
+        }
+      },
+      student: {
+        name: bookData.student_name
+      },
+      reviewScore: bookData.review_score
+    }
+  }
+
   // Fetch data
   const fetchProjectBooks = async (page = 1, pageSize = 10) => {
     try {
@@ -142,7 +162,10 @@ export default function StudentProjectBooksPage() {
       })
       
       const booksData = response.data || response.projectBooks || response || []
-      setProjectBooks(Array.isArray(booksData) ? booksData : [])
+      const transformedData = Array.isArray(booksData) 
+        ? booksData.map(transformProjectBookData) 
+        : []
+      setProjectBooks(transformedData)
       
       if (response.pagination) {
         setPagination({
