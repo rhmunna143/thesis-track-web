@@ -1,4 +1,4 @@
-# ThesisTrack - Project Proposal & Review System
+# Appro - Project Proposal & Review System
 
 A centralized web application that streamlines the thesis/project proposal submission and review process in academic institutions.
 

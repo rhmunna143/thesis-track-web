@@ -1,4 +1,4 @@
-# ThesisTrack - Dynamic API Integration Implementation Summary
+# Appro - Dynamic API Integration Implementation Summary
 
 ## ✅ Implementation Complete
 

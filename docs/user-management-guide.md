@@ -1,7 +1,7 @@
 # User Management Page - Complete Implementation Guide
 
 ## Overview
-This document provides a comprehensive guide to the User Management page implementation for the ThesisTrack Admin Dashboard. The page provides full CRUD (Create, Read, Update, Delete) functionality for managing system users with role-based permissions.
+This document provides a comprehensive guide to the User Management page implementation for the Appro Admin Dashboard. The page provides full CRUD (Create, Read, Update, Delete) functionality for managing system users with role-based permissions.
 
 ## Features Implemented
 

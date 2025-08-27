@@ -11,7 +11,7 @@ const poppins = Poppins({
 });
 
 export const metadata = {
-  title: "ThesisTrack - Project Proposal & Review System",
+  title: "Appro - Project Proposal & Review System",
   description:
     "A centralized platform for thesis proposal submission and review",
 };

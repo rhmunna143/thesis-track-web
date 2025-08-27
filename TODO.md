@@ -1,4 +1,4 @@
-# ThesisTrack TODO List
+# Appro TODO List
 
 ## ✅ Phase 1: Foundation (COMPLETED)
 - [x] Project setup and configuration

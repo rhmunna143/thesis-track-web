@@ -1,12 +1,12 @@
 # Product Requirements Document (PRD) - Frontend
-## ThesisTrack: Project Proposal & Book Review System
+## Appro: Project Proposal & Book Review System
 
 ---
 
 ## 1. Executive Summary
 
 ### Product Overview
-ThesisTrack is a centralized web application that streamlines the thesis/project proposal submission and review process in academic institutions. The frontend provides an intuitive interface for students, teachers, and administrators to manage the entire proposal lifecycle.
+Appro is a centralized web application that streamlines the thesis/project proposal submission and review process in academic institutions. The frontend provides an intuitive interface for students, teachers, and administrators to manage the entire proposal lifecycle.
 
 ### Target Users
 - **Students**: Submit and track project proposals
