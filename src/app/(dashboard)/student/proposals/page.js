@@ -410,12 +410,13 @@ export default function StudentProposalsPage() {
     }
   }
 
-  // Update proposal - DISABLED: Backend doesn't support proposal updates
-  // Students must delete and recreate proposals for changes
+  // Update proposal - Only allowed for REVISION_REQUIRED status
   const handleUpdateProposal = async (values) => {
-    message.error('Proposal updates are not supported. Please delete and create a new proposal if changes are needed.')
-    return
-    /*
+    if (!selectedProposal || selectedProposal.status !== 'REVISION_REQUIRED') {
+      message.error('Proposal updates are only allowed for proposals requiring revision.')
+      return
+    }
+    
     try {
       setLoading(true)
       
@@ -426,13 +427,14 @@ export default function StudentProposalsPage() {
       
       const updateData = {
         ...values,
-        documentUrl
+        documentUrl,
+        status: 'PENDING' // Reset status to PENDING after revision
       }
       
       console.log('Attempting to update proposal with ID:', selectedProposal.id, 'Data:', updateData)
       await proposalService.updateProposal(selectedProposal.id, updateData)
       
-      message.success('Proposal updated successfully!')
+      message.success('Proposal updated successfully! Status changed to PENDING for review.')
       setEditModal(false)
       editForm.resetFields()
       setFileList([])
@@ -447,7 +449,6 @@ export default function StudentProposalsPage() {
     } finally {
       setLoading(false)
     }
-    */
   }
 
   // Delete proposal
@@ -487,15 +488,26 @@ export default function StudentProposalsPage() {
     }
   }
 
-  // Edit proposal - DISABLED: Backend doesn't support updates
+  // Edit proposal - Only allowed for REVISION_REQUIRED status
   const handleEditProposal = (proposal) => {
-    message.info('Proposal editing is not available. Delete and create a new proposal if changes are needed.')
-    return
-    /*
+    if (proposal.status !== 'REVISION_REQUIRED') {
+      message.info('Proposal editing is only available for proposals requiring revision.')
+      return
+    }
+    
+    console.log('Opening edit modal for proposal:', proposal)
     setSelectedProposal(proposal)
-    editForm.setFieldsValue(proposal)
+    editForm.setFieldsValue({
+      title: proposal.title,
+      description: proposal.description,
+      teacherId: proposal.teacherId || proposal.teacher?.id,
+      keywords: proposal.keywords,
+      methodology: proposal.methodology,
+      expectedOutcomes: proposal.expectedOutcomes,
+      resources: proposal.resources,
+      timeline: proposal.timeline
+    })
     setEditModal(true)
-    */
   }
 
   // Load comments - Comments are included in proposal details response
@@ -638,12 +650,13 @@ export default function StudentProposalsPage() {
           </Tooltip>
           
           {record.status === 'PENDING' || record.status === 'REVISION_REQUIRED' ? (
-            <Tooltip title="Edit not supported - Delete and recreate if needed">
+            <Tooltip title={record.status === 'REVISION_REQUIRED' ? "Edit Proposal" : "Edit not supported - Delete and recreate if needed"}>
               <Button
                 type="link"
                 icon={<EditOutlined />}
-                disabled
-                style={{ color: '#d1d5db' }}
+                disabled={record.status !== 'REVISION_REQUIRED'}
+                onClick={() => record.status === 'REVISION_REQUIRED' ? handleEditProposal(record) : null}
+                style={{ color: record.status === 'REVISION_REQUIRED' ? undefined : '#d1d5db' }}
               />
             </Tooltip>
           ) : null}
@@ -782,7 +795,7 @@ export default function StudentProposalsPage() {
         <Col span={24}>
           <Alert
             message="Proposal Management Information"
-            description="Once submitted, proposals cannot be directly edited. If you need to make changes to a PENDING proposal, you can delete it and create a new one. For REVISION_REQUIRED proposals, please delete the current one and submit a new proposal with the requested changes."
+            description="Proposals with REVISION_REQUIRED status can be edited directly using the edit button. For PENDING proposals, if you need to make changes, you can delete it and create a new one. Once approved or submitted for final review, proposals cannot be modified."
             type="info"
             showIcon
             style={{ marginBottom: 16 }}
