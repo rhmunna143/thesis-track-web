@@ -100,6 +100,11 @@ const menuItems = {
       label: "All Proposals",
     },
     {
+      key: "/admin/books",
+      icon: <BookOutlined />,
+      label: "All Books",
+    },
+    {
       key: "/admin/analytics",
       icon: <BarChartOutlined />,
       label: "System Analytics",

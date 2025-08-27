@@ -701,7 +701,7 @@ export default function StudentProposalsPage() {
       description: 'Abstract and methodology'
     },
     {
-      title: 'Documentation',
+      title: 'Document',
       description: 'Upload proposal document'
     },
     {
