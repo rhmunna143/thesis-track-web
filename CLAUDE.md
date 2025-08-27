@@ -9,10 +9,10 @@ ThesisTrack is a centralized web application for managing thesis/project proposa
 - **State Management**: Zustand
 - **HTTP Client**: Axios
 - **Forms**: React Hook Form with Yup validation
-- **Charts**: Recharts
+- **Charts**: Recharts (for analytics dashboard)
 - **Icons**: Ant Design icons + Lucide React
 - **File Handling**: react-pdf for PDF viewing
-- **Date Handling**: date-fns
+- **Date Handling**: dayjs (for date manipulation in analytics)
 
 ## Project Structure
 ```
@@ -73,9 +73,15 @@ src/
 
 ### Teacher Features
 - Dashboard showing pending reviews and metrics
-- Proposal review interface
-- Student management system
-- Performance analytics
+- Proposal review interface with comment system
+- Student management and supervision tracking
+- Comprehensive analytics dashboard with:
+  - Key performance metrics (students, proposals, approval rates)
+  - Interactive charts (proposal status distribution, monthly trends)
+  - Recent activities tracking
+  - Top performing students ranking
+  - Performance insights and recommendations
+  - Time period filtering and data export
 
 ### Admin Features
 - System overview dashboard
@@ -138,6 +144,10 @@ src/
 - `/student/profile` - Student profile management
 - `/student/proposals/new` - Multi-step proposal form
 - `/teacher` - Teacher dashboard
+- `/teacher/proposals` - Teacher proposal review and management
+- `/teacher/books` - Project book review and scoring system
+- `/teacher/students` - Student supervision and tracking
+- `/teacher/analytics` - Comprehensive analytics dashboard
 - `/admin` - Admin dashboard
 
 ## Mock Data Used

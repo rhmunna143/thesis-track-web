@@ -12,20 +12,18 @@ export const commentService = {
   },
 
   // Get comments for a proposal
-  // NOTE: /proposals/{id}/comments endpoint returns 500 error
-  // Comments are included in the proposal details response instead
+  // Try the direct endpoint first, fallback to proposal details if needed
   getProposalComments: async (proposalId) => {
-    console.warn('Direct comments endpoint returns 500 error. Use proposal details instead.')
-    throw new Error('Comments are included in proposal details. Use proposalService.getProposal() instead.')
-    /*
     try {
-      // Updated to match Postman collection: /proposals/{id}/comments
+      // Try direct comments endpoint
       const response = await api.get(`/proposals/${proposalId}/comments`)
       return response.data
     } catch (error) {
+      // If direct endpoint fails, this error will be caught by the caller
+      // who can then fallback to getting comments from proposal details
+      console.warn('Direct comments endpoint failed:', error.response?.status)
       throw error.response?.data || error
     }
-    */
   },
 
   // Get comments for a proposal (alternative method name)
