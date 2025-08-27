@@ -77,6 +77,46 @@ const TeacherProjectBooksPage = () => {
 
   const [reviewForm] = Form.useForm();
   const { user } = useAuthStore();
+  const [selectedStatus, setSelectedStatus] = useState(null);
+
+  // Handle status change in review form
+  const handleStatusChange = (status) => {
+    setSelectedStatus(status);
+    
+    // Update form validation based on status
+    if (status === 'APPROVED') {
+      reviewForm.setFields([
+        {
+          name: 'reviewScore',
+          rules: [
+            { required: true, message: 'Score is required for approved projects' },
+            { type: 'number', min: 60, max: 100, message: 'Approved projects must have a score of 60 or above' }
+          ]
+        }
+      ]);
+    } else if (status === 'REJECTED') {
+      reviewForm.setFields([
+        {
+          name: 'reviewScore',
+          rules: [
+            { required: false },
+            { type: 'number', min: 0, max: 59, message: 'Rejected projects typically have scores below 60' }
+          ]
+        }
+      ]);
+    } else {
+      // For UNDER_REVIEW, REVISION_REQUIRED, etc.
+      reviewForm.setFields([
+        {
+          name: 'reviewScore',
+          rules: [
+            { required: false },
+            { type: 'number', min: 0, max: 100, message: 'Score must be between 0 and 100' }
+          ]
+        }
+      ]);
+    }
+  };
 
   // Transform backend data to frontend format
   const transformProjectBookData = (backendData) => {
@@ -204,15 +244,42 @@ const TeacherProjectBooksPage = () => {
   // Handle review submission
   const handleReview = async (values) => {
     try {
-      await projectBookService.reviewProjectBook(selectedProjectBook.id, values);
+      console.log('Submitting review with values:', values);
+      
+      // Prepare the review data
+      const reviewData = {
+        status: values.status,
+        reviewScore: values.reviewScore,
+        reviewComments: values.reviewComments
+      };
+      
+      // For REVISION_REQUIRED status, ensure we have all required fields
+      if (values.status === 'REVISION_REQUIRED') {
+        if (!values.reviewComments || values.reviewComments.trim() === '') {
+          message.error('Review comments are required for revision requests');
+          return;
+        }
+        // Set a default score for revision required if not provided
+        if (!values.reviewScore || values.reviewScore === 0) {
+          reviewData.reviewScore = 50; // Default score for revision required
+        }
+      }
+      
+      console.log('Final review data:', reviewData);
+      
+      const response = await projectBookService.reviewProjectBook(selectedProjectBook.id, reviewData);
+      console.log('Review response:', response);
+      
       message.success('Review submitted successfully');
       setReviewModalVisible(false);
       reviewForm.resetFields();
       setSelectedProjectBook(null);
+      setSelectedStatus(null);
       fetchProjectBooks();
     } catch (error) {
       console.error('Review submission failed:', error);
-      message.error('Failed to submit review');
+      const errorMessage = error.response?.data?.message || error.message || 'Failed to submit review';
+      message.error(`Failed to submit review: ${errorMessage}`);
     }
   };
 
@@ -231,18 +298,32 @@ const TeacherProjectBooksPage = () => {
   // Download document
   const handleDownload = async (projectBook, type = 'document') => {
     try {
-      const blob = type === 'document' 
-        ? await projectBookService.downloadDocument(projectBook.id)
-        : await projectBookService.downloadPresentation(projectBook.id);
+      let downloadUrl;
+      let fileName;
       
-      const url = window.URL.createObjectURL(blob);
+      if (type === 'document') {
+        downloadUrl = projectBook.documentUrl;
+        fileName = `${projectBook.title}_document.pdf`;
+      } else if (type === 'presentation') {
+        downloadUrl = projectBook.presentationUrl;
+        fileName = `${projectBook.title}_presentation.pdf`;
+      }
+      
+      if (!downloadUrl) {
+        message.warning(`${type === 'document' ? 'Document' : 'Presentation'} not available`);
+        return;
+      }
+      
+      // Create a direct link to download the file
       const link = document.createElement('a');
-      link.href = url;
-      link.download = `${projectBook.title}_${type}.pdf`;
+      link.href = `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}${downloadUrl}`;
+      link.download = fileName;
+      link.target = '_blank';
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      window.URL.revokeObjectURL(url);
+      
+      message.success(`${type === 'document' ? 'Document' : 'Presentation'} download started`);
     } catch (error) {
       console.error('Download failed:', error);
       message.error('Failed to download file');
@@ -378,10 +459,11 @@ const TeacherProjectBooksPage = () => {
               icon={<EditOutlined />}
               onClick={() => {
                 setSelectedProjectBook(record);
+                setSelectedStatus(record.status);
                 setReviewModalVisible(true);
                 reviewForm.setFieldsValue({
                   status: record.status,
-                  reviewScore: record.reviewScore || 0,
+                  reviewScore: record.reviewScore || undefined,
                   reviewComments: record.reviewComments || ''
                 });
               }}
@@ -557,6 +639,7 @@ const TeacherProjectBooksPage = () => {
           setReviewModalVisible(false);
           reviewForm.resetFields();
           setSelectedProjectBook(null);
+          setSelectedStatus(null);
         }}
         footer={null}
         width={600}
@@ -580,7 +663,10 @@ const TeacherProjectBooksPage = () => {
             label="Review Status"
             rules={[{ required: true, message: 'Please select a status' }]}
           >
-            <Select placeholder="Select review status">
+            <Select 
+              placeholder="Select review status"
+              onChange={handleStatusChange}
+            >
               <Option value="UNDER_REVIEW">Under Review</Option>
               <Option value="APPROVED">Approved</Option>
               <Option value="REJECTED">Rejected</Option>
@@ -588,18 +674,37 @@ const TeacherProjectBooksPage = () => {
             </Select>
           </Form.Item>
 
+          {selectedStatus && (
+            <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded">
+              <Text type="secondary">
+                {selectedStatus === 'APPROVED' && 'For approved projects, a score of 60 or above is required.'}
+                {selectedStatus === 'REJECTED' && 'For rejected projects, please provide detailed feedback in comments.'}
+                {selectedStatus === 'REVISION_REQUIRED' && 'For revision requests, detailed comments explaining required changes are mandatory.'}
+                {selectedStatus === 'UNDER_REVIEW' && 'Project is currently being reviewed. Score and comments are optional.'}
+              </Text>
+            </div>
+          )}
+
           <Form.Item
             name="reviewScore"
             label="Score (0-100)"
             rules={[
-              { required: true, message: 'Please provide a score' },
-              { type: 'number', min: 0, max: 100, message: 'Score must be between 0 and 100' }
+              { 
+                required: false, // Make it optional initially
+                message: 'Please provide a score' 
+              },
+              { 
+                type: 'number', 
+                min: 0, 
+                max: 100, 
+                message: 'Score must be between 0 and 100' 
+              }
             ]}
           >
             <InputNumber
               min={0}
               max={100}
-              placeholder="Enter score"
+              placeholder="Enter score (optional for some statuses)"
               className="w-full"
             />
           </Form.Item>
@@ -607,7 +712,16 @@ const TeacherProjectBooksPage = () => {
           <Form.Item
             name="reviewComments"
             label="Review Comments"
-            rules={[{ required: true, message: 'Please provide review comments' }]}
+            rules={[
+              { 
+                required: true, 
+                message: 'Please provide review comments' 
+              },
+              {
+                min: 10,
+                message: 'Review comments must be at least 10 characters long'
+              }
+            ]}
           >
             <TextArea
               rows={4}
@@ -774,10 +888,11 @@ const TeacherProjectBooksPage = () => {
                 icon={<EditOutlined />}
                 onClick={() => {
                   setDetailsDrawerVisible(false);
+                  setSelectedStatus(selectedProjectBook.status);
                   setReviewModalVisible(true);
                   reviewForm.setFieldsValue({
                     status: selectedProjectBook.status,
-                    reviewScore: selectedProjectBook.reviewScore || 0,
+                    reviewScore: selectedProjectBook.reviewScore || undefined,
                     reviewComments: selectedProjectBook.reviewComments || ''
                   });
                 }}
